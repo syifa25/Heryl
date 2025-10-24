@@ -14,3 +14,17 @@ Apakah kamu akan menjadi pahlawan sejati… atau hanya pemimpi biasa?
 * Pilihan aksi yang memengaruhi ending cerita
 * Beberapa ending berbeda (Good / Neutral / Bad)
 * Cerita ringan dengan elemen moral sederhana
+
+## **💻 Teknologi yang Digunakan**
+
+* Frontend: HTML, CSS, JavaScript (Canvas / Phaser.js)
+* Backend (opsional): Node.js + Express
+* Database: PostgreSQL
+
+## **🧠 Tim Pengembang**
+|Nama|Peran|
+|-----|-----|
+|Naila|Desain dan Animasi|
+|Nabila|UI/UX desain|
+|Bella|Database|
+|Umri|Developer|
