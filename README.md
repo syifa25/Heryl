@@ -17,8 +17,8 @@ Apakah kamu akan menjadi pahlawan sejati… atau hanya pemimpi biasa?
 
 ## **💻 Teknologi yang Digunakan**
 
-* Frontend: HTML, CSS, JavaScript (Canvas / Phaser.js)
-* Backend (opsional): Node.js + Express
+* Frontend: HTML, CSS, JavaScript
+* Backend : Node.js + Express
 * Database: PostgreSQL
 
 ## **🧠 Tim Pengembang**
