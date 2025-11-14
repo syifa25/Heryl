@@ -131,3 +131,40 @@ body {
   margin-top: 10px;
   z-index: 2;
 }
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 650px;
+  background-image: url("img/bghome.gif");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 250px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #A9BA54 100%);
+}
+
+.hero h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 60px;
+  z-index: 5;
+  letter-spacing: 3px;
+}
+
+.hero p {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 20px;
+  margin-top: 15px;
+  z-index: 5;
+}
