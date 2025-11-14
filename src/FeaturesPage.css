@@ -88,7 +88,7 @@ nav ul li a:hover {
 
 .hero {
     height: 350px;
-    background-image: url("../img/bg.gif");
+    background-image: url("../img/bg1.gif");
     background-size: cover;
     background-position: center;
     display: flex;
@@ -133,7 +133,6 @@ nav ul li a:hover {
     opacity: 0.6;
 }
 
-/* FOOTER */
 .footer {
     margin-top: 60px;
     padding: 40px 0;
