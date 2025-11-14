@@ -1,3 +1,5 @@
+
+
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d')
 
@@ -81,7 +83,7 @@ class Sprite{
     }
 }
     // canvas.width / 2 - this.image.width / 4 / 2,
-    // canvas.height / 2 - this.image.height / 2,
+    // canvas.height / 2 - this.image.height / 2,   
 const player = new Sprite({
     position:{
         x:canvas.width / 2 - 192 / 4 / 2,
@@ -187,6 +189,7 @@ function animate() {
 }
 
 animate()
+
 
 let lastKey = ''
 window.addEventListener('keydown', (e) => {
