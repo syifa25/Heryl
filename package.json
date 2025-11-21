@@ -30,7 +30,9 @@
     "postcss": "^8.5.6",
     "rolldown": "^1.0.0-beta.41",
     "source-map-js": "^1.2.1",
-    "tinyglobby": "^0.2.15"
+    "tinyglobby": "^0.2.15",
+    "@tailwindcss/vite": "^4.1.17",
+    "tailwindcss": "^4.1.17"
   },
   "repository": {
     "type": "git",
