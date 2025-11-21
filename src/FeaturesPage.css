@@ -52,6 +52,15 @@ nav ul li {
   float: left;
 }
 
+nav ul li a.active {
+    color: #6fa155;
+    text-decoration: underline;
+}
+
+nav ul li a.active:hover {
+    color: #5e8a47; 
+}
+
 nav ul li a {
   color: #FFF2EF;
   font-weight: bold;
@@ -67,6 +76,10 @@ nav ul li a {
   transition: background 0.2s, color 0.2s;
 }
 
+nav ul li a:not(.active):hover {
+    text-decoration: underline;
+}
+
 nav ul li a:hover {
   text-decoration: underline;
 }
@@ -75,7 +88,7 @@ nav ul li a:hover {
   background-color: #83B268;
   padding: 10px 20px;
   border-radius: 25px;
-  color: white !important;
+  color: white;
   font-weight: bold;
   transition: 0.3s;
 }
@@ -87,8 +100,8 @@ nav ul li a:hover {
 
 
 .hero {
-    height: 350px;
-    background-image: url("../img/bg1.gif");
+    height: 800px;
+    background-image: url("img/bg1.gif");
     background-size: cover;
     background-position: center;
     display: flex;
@@ -96,6 +109,29 @@ nav ul li a:hover {
     justify-content: center;
     color: white;
     text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px; 
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(168, 191, 83, 0.7) 50%,
+        #a8bf53 100%
+    );
+    z-index: 1;
+}
+
+.hero-title,
+.hero-sub {
+    position: relative;
+    z-index: 2;
 }
 
 .hero-title {
@@ -111,6 +147,8 @@ nav ul li a:hover {
 
 .main {
     padding: 50px 0;
+    
+    margin-top: -1px; 
 }
 
 .main-title {
@@ -125,6 +163,19 @@ nav ul li a:hover {
     margin: 0 auto;
     border-radius: 10px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.feature-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    margin: 30px auto 0 auto;
+    max-width: 600px;
+    padding: 0 20px;
+}
+
+.feature-description strong {
+    color: #000;
 }
 
 .tiny-note {
