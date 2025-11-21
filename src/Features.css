@@ -1,0 +1,348 @@
+.features {
+    background-color: #ffffff;
+    min-height: 3290px;
+    min-width: 1440px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.features .rectangle {
+    background-color: #d9d9d9;
+    height: 157px;
+    left: -22px;
+    position: absolute;
+    top: 0;
+    width: calc(100% + 30px);
+}
+
+.features .img {
+    height: calc(100% - 1192px);
+    left: -10px;
+    position: absolute;
+    top: 0;
+    width: calc(100% + 18px);
+}
+
+.features .footer {
+    background-color: transparent;
+    height: 982px;
+    left: -80px;
+    position: absolute;
+    top: 2308px;
+    width: 1605px;
+}
+
+.features .div {
+    background-color: #a7b65c;
+    height: 982px;
+    left: 18px;
+    position: absolute;
+    top: 0;
+    width: 1568px;
+}
+
+.features .text-wrapper {
+    -webkit-text-stroke: 0.72px #000000;
+    bottom: 30px;
+    color: #ffffff;
+    font-family: "Poppins-Regular", Helvetica;
+    font-size: 20.6px;
+    font-weight: 400;
+    left: 376px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    width: 850px;
+}
+
+.features .sosmed {
+    height: 100px;
+    left: 556px;
+    position: absolute;
+    top: 628px;
+    width: 490px;
+}
+
+.features .text-wrapper-2 {
+    color: #ffffff;
+    font-family: "Poppins-Bold", Helvetica;
+    font-size: 29.2px;
+    font-weight: 700;
+    left: calc(50% - 84px);
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 491px;
+}
+
+.features .p {
+    -webkit-text-stroke: 0.7px #000000;
+    bottom: 132px;
+    color: #ffffff;
+    font-family: "Poppins-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 389px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    width: 823px;
+}
+
+.features .line {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 377px;
+    width: 1599px;
+}
+
+.features .content {
+    bottom: 633px;
+    height: 1560px;
+    left: -40px;
+    position: absolute;
+    width: calc(100% + 141px);
+}
+
+.features .content-background {
+    background-color: #a9ba53;
+    bottom: 0;
+    filter: blur(50px);
+    height: 1560px;
+    left: 0;
+    position: absolute;
+    width: calc(100% - 4px);
+}
+
+.features .screenshpt-game {
+    background-color: #f3f3f3;
+    height: 731px;
+    left: 187px;
+    position: absolute;
+    top: 450px;
+    width: 1145px;
+}
+
+.features .interact-with-cats {
+    -webkit-text-stroke: 0.54px #000000;
+    color: transparent;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 15.3px;
+    font-weight: 400;
+    left: 472px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 1327px;
+    width: 631px;
+}
+
+.features .span {
+    color: #944508;
+}
+
+.features .text-wrapper-3 {
+    color: #513a29;
+}
+
+.features .text-wrapper-4 {
+    color: #ffffff;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 35px;
+    font-weight: 400;
+    left: calc(50% - 452px);
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 274px;
+    white-space: nowrap;
+}
+
+.features .heroes {
+    align-items: center;
+    box-shadow: 15px 15px 4px #00000040;
+    display: flex;
+    flex-direction: column;
+    gap: 37px;
+    height: 135px;
+    left: calc(50% - 312px);
+    position: absolute;
+    top: 506px;
+    width: 628px;
+}
+
+.features .text-wrapper-5 {
+    color: #ffffff;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 76.1px;
+    font-weight: 400;
+    height: 76px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-left: -4px;
+    margin-top: 0;
+    text-shadow: 10px 10px 4px #00000040;
+    width: 624px;
+}
+
+.features .text-wrapper-6 {
+    color: #ffffff;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 22.4px;
+    font-weight: 400;
+    height: 22px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-left: -2px;
+    text-shadow: 10px 10px 4px #00000040;
+    white-space: nowrap;
+    width: 292px;
+}
+
+.features .header {
+    background-color: transparent;
+    height: 127px;
+    left: -16px;
+    position: absolute;
+    top: -6px;
+    width: calc(100% + 31px);
+}
+
+.features .rectangle-2 {
+    height: 138px;
+    left: -377px;
+    position: absolute;
+    top: -11px;
+    width: 1848px;
+}
+
+.features .navbar {
+    display: flex;
+    height: 48px;
+    left: 153px;
+    position: absolute;
+    top: 53px;
+    width: 1170px;
+}
+
+.features .text-wrapper-7 {
+    align-items: center;
+    color: #ffffff;
+    display: flex;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 22.6px;
+    font-weight: 400;
+    height: 32px;
+    justify-content: center;
+    letter-spacing: -0.45px;
+    line-height: 31.6px;
+    margin-top: 8px;
+    width: 139.87px;
+}
+
+.features .navbar-2 {
+    display: flex;
+    margin-left: 172.1px;
+    margin-top: 15px;
+    width: 652px;
+}
+
+.features .text-wrapper-8 {
+    color: #ffffff;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 18.2px;
+    font-weight: 400;
+    height: 18px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+    width: 73px;
+}
+
+.features .text-wrapper-9 {
+    color: #ffffff;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 18.2px;
+    font-weight: 400;
+    height: 18px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-left: 57px;
+    white-space: nowrap;
+    width: 146px;
+}
+
+.features .text-wrapper-10 {
+    color: #4b5b24;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 18.2px;
+    font-weight: 400;
+    height: 18px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-left: 57px;
+    white-space: nowrap;
+    width: 146px;
+}
+
+.features .text-wrapper-11 {
+    color: #ffffff;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 18.2px;
+    font-weight: 400;
+    height: 18px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-left: 74px;
+    white-space: nowrap;
+    width: 91px;
+}
+
+.features .play-button {
+    all: unset;
+    box-sizing: border-box;
+    height: 48px;
+    margin-left: 66px;
+    position: relative;
+    width: 140px;
+}
+
+.features .rectangle-3 {
+    background: linear-gradient(180deg, rgba(131, 178, 104, 1) 0%, rgba(131, 178, 104, 1) 100%);
+    border-radius: 12px;
+    box-shadow: 0px 4px 4px #00000040;
+    height: 48px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 138px;
+}
+
+.features .text-wrapper-12 {
+    color: #ffffff;
+    font-family: "Press Start 2P-Regular", Helvetica;
+    font-size: 18.9px;
+    font-weight: 400;
+    left: 31px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 15px;
+    white-space: nowrap;
+}
+
+.features .line-2 {
+    height: 1px;
+    left: 785px;
+    object-fit: cover;
+    position: absolute;
+    top: 94px;
+    width: 172px;
+}
