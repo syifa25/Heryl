@@ -3,41 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About – Heryll</title>
-
-    <link rel="stylesheet" href="gem.css" />
-
+    <title>About - HERYLL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'press-start': ['"Press Start 2P"', 'monospace'],
+                    },
+                    colors: {
+                        'retro-green': '#a8bf53',
+                        'retro-green-dark': '#8ca443',
+                        'retro-green-light': '#A7B65D',
+                        'retro-green-btn': '#83B268',
+                        'retro-green-btn-hover': '#6fa155',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'slide-up': 'slideUp 1.2s ease-out',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
+<body class="font-press-start bg-retro-green">
+    <header>
+        <nav>
+            <div class="wrapper">
+                <div class="logo">
+                    <a href="#" class="transition-all duration-300 hover:scale-105">HERYLL</a>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="../../index.html" class="transition-all duration-300 hover:text-retro-green-btn">HOME</a></li>
+                        <li><a href="../tutorial/tutorial.html" class="transition-all duration-300 hover:text-retro-green-btn">TUTORIAL</a></li>
+                        <li><a href="../features/FeaturesPage.html" class="transition-all duration-300 hover:text-retro-green-btn">FEATURES</a></li>
+                        <li><a href="../about/about.html" class="active transition-all duration-300">ABOUT</a></li>
+                        <li><a href="../play/play.html" class="btn-play transition-all duration-300 hover:scale-105">PLAY</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-<body>
+    <section class="hero">
+        <h1 class="hero-title animate-slide-up">ABOUT</h1>
+        <p class="hero-sub animate-slide-up">The game and character</p>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+            <i class="fas fa-chevron-down text-white text-2xl"></i>
+        </div>
+    </section>
 
-    <div class="about-container">
-        <h1 class="about-title">ABOUT THIS GAME</h1>
-
-        <p class="about-desc">
-            HERYLL adalah game web interaktif yang menceritakan seorang anak SD
-            yang membayangkan dirinya sebagai superhero penyelamat kucing di lingkungan sekolah.
-            Game ini dibuat untuk memberikan pengalaman bermain yang ringan,
-            menyenangkan, dan mengajarkan kepedulian terhadap sesama makhluk hidup.
+    <section class="main">
+        <h2 class="main-title animate-fade-in">Get to know about the character!</h2>
+        <div class="white-box transition-all duration-500 hover:scale-105">
+            <img src="Mc buka mata buka mulut (1).png" class="abt animate-float">
+        </div>
+        <p class="feature-description animate-fade-in">
+            <strong>She just a kid who wanna be hero on her own </strong> A kind little girl who loves cats and wanna save all of them with her own strength :3
         </p>
+    </section>
 
-        <h2 class="team-title">TIM PENGEMBANG</h2>
-
-        <div class="team-box">
-            <div class="team-member"><b>Nama:</b> Umri, Nailah, Nabila, Bella</div>
-            <div class="team-member"><b>NIM:</b> 029, 002, 056, 137</div>
-            <div class="team-member"><b>Universitas:</b> Universitas Sumatera Utara (USU)</div>
-            <div class="team-member"><b>Program Studi:</b> Ilmu Komputer</div>
+    <footer class="footer">
+        <h3 class="contact-title animate-fade-in">CONTACTS</h3>
+        <div class="icons">
+            <i class="fa-brands fa-instagram transition-all duration-300 hover:scale-125 hover:text-pink-500"></i>
+            <i class="fa-brands fa-twitter transition-all duration-300 hover:scale-125 hover:text-blue-400"></i>
+            <i class="fa-brands fa-tiktok transition-all duration-300 hover:scale-125 hover:text-black"></i>
+            <i class="fa-brands fa-facebook transition-all duration-300 hover:scale-125 hover:text-blue-600"></i>
         </div>
-
-        <h2 class="contact-title">KONTAK</h2>
-
-        <div class="contact-links">
-            <a href="https://wa.me/6282268097698" target="_blank">WhatsApp</a>
-
-        </div>
-
-    </div>
-
+        <p class="footer-small animate-fade-in">
+            For business or support, our team is ready to help you anytime.
+        </p>
+        <p class="copy animate-fade-in">Copyright © 2025. HERYLL Team.</p>
+    </footer>
 </body>
 </html>
