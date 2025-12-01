@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Game - HERYLL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'press-start': ['"Press Start 2P"', 'monospace'],
+                    },
+                    colors: {
+                        'retro-green': '#a8bf53',
+                        'retro-green-dark': '#8ca443',
+                        'retro-green-light': '#A7B65D',
+                        'retro-green-btn': '#83B268',
+                        'retro-green-btn-hover': '#6fa155',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 1s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'game-glow': 'gameGlow 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        gameGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(131, 178, 104, 0.5)' },
+                            '50%': { boxShadow: '0 0 20px rgba(131, 178, 104, 0.8)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="./play.css">
+</head>
+<body class="font-press-start bg-retro-green">
+    <header>
+        <nav class="sticky top-0 z-50 bg-retro-green-light transition-all duration-300 hover:shadow-lg">
+            <div class="wrapper">
+                <div class="logo animate-pulse-slow">
+                    <a href="#" class="transition-all duration-300 hover:scale-105">HERYLL</a>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="../../index.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">HOME</a></li>
+                        <li><a href="../tutorial/tutorial.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">TUTORIAL</a></li>
+                        <li><a href="../features/FeaturesPage.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">FEATURES</a></li>
+                        <li><a href="../about/about.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">ABOUT</a></li>
+                        <li><a href="../play/play.html" class="btn-play transition-all duration-300 transform hover:scale-110 animate-game-glow">PLAY</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero animate-fade-in">
+        <h1 class="hero-title animate-slide-up">HERYLL</h1>
+        <p class="hero-sub animate-slide-up delay-300">Save stray cats and become hero</p>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+            <i class="fas fa-chevron-down text-white text-2xl"></i>
+        </div>
+    </section>
+
+    <section class="main">
+        <h2 class="main-title animate-pulse-slow">PLAYING NOW</h2>
+        <div class="white-box transition-all duration-500 hover:scale-105 animate-game-glow">
+            <!-- KODE GAME DARI KAMU -->
+            <div id="game-container" class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg relative overflow-hidden">
+                <!-- Loading Animation -->
+                <div id="loading-screen" class="absolute inset-0 bg-white bg-opacity-90 flex flex-col items-center justify-center z-10 animate-fade-in">
+                    <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-retro-green-btn mb-4"></div>
+                    <p class="text-sm text-gray-600 animate-pulse">Loading Game Assets...</p>
+                </div>
+                
+                <!-- Game Canvas -->
+                <canvas class="animate-fade-in delay-500"></canvas>
+                
+                <!-- Game Controls Info -->
+                <div id="controls-info" class="absolute bottom-4 left-4 bg-black bg-opacity-70 text-white p-3 rounded-lg text-xs animate-slide-up delay-700">
+                    <p class="mb-1">← → : Move</p>
+                    <p class="mb-1">Space : Jump</p>
+                    <p>ESC : Pause</p>
+                </div>
+            </div>
+            
+            <script src="/src/data/collisions.js"></script>
+            <script src="/src/scripts/classes.js"></script>
+            <script src="/src/scripts/game.js"></script>
+            
+            <!-- Simulate game loading -->
+            <script>
+                // Simulate game loading
+                setTimeout(() => {
+                    document.getElementById('loading-screen').classList.add('hidden');
+                }, 2000);
+            </script>
+        </div>
+        
+        <!-- Game Stats -->
+        <div class="game-stats mt-8 max-w-4xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg p-4 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-100">
+                    <div class="flex items-center justify-center mb-2">
+                        <i class="fas fa-cat text-retro-green-btn text-2xl mr-2 animate-bounce-slow"></i>
+                        <span class="text-lg font-bold">Cats Saved</span>
+                    </div>
+                    <p class="text-3xl text-retro-green-btn font-bold animate-pulse">0</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-300">
+                    <div class="flex items-center justify-center mb-2">
+                        <i class="fas fa-clock text-retro-green-btn text-2xl mr-2"></i>
+                        <span class="text-lg font-bold">Time Played</span>
+                    </div>
+                    <p class="text-3xl text-retro-green-btn font-bold">00:00</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-500">
+                    <div class="flex items-center justify-center mb-2">
+                        <i class="fas fa-trophy text-retro-green-btn text-2xl mr-2 animate-float"></i>
+                        <span class="text-lg font-bold">Level</span>
+                    </div>
+                    <p class="text-3xl text-retro-green-btn font-bold">1</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer transition-all duration-500 hover:bg-retro-green-dark">
+        <p class="copy animate-fade-in">Copyright © 2025. HERYLL Team.</p>
+    </footer>
+</body>
+</html>
