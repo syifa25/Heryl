@@ -42,7 +42,7 @@ const foregroundImage = new Image()
 foregroundImage.src = './src/img/foregroundObjek.png'
 
 const playerImage = new Image()
-playerImage.src = './src/img/playerDown.png'
+playerImage.src = './src/img/yn.png'
 
 
     // canvas.width / 2 - this.image.width / 4 / 2,
