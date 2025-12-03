@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    
+
     <script>
         tailwind.config = {
             theme: {
@@ -53,6 +55,8 @@
     </script>
     <link rel="stylesheet" href="./play.css">
 </head>
+
+
 <body class="font-press-start bg-retro-green">
     <header>
         <nav class="sticky top-0 z-50 bg-retro-green-light transition-all duration-300 hover:shadow-lg">
@@ -93,7 +97,7 @@
                 </div>
                 
                 <!-- Game Canvas -->
-                <canvas class="animate-fade-in delay-500"></canvas>
+                <canvas id= "gameCanvas" class="animate-fade-in delay-500"></canvas>
                 
                 <!-- Game Controls Info -->
                 <div id="controls-info" class="absolute bottom-4 left-4 bg-black bg-opacity-70 text-white p-3 rounded-lg text-xs animate-slide-up delay-700">
@@ -102,10 +106,6 @@
                     <p>ESC : Pause</p>
                 </div>
             </div>
-            
-            <script src="/src/data/collisions.js"></script>
-            <script src="/src/scripts/classes.js"></script>
-            <script src="/src/scripts/game.js"></script>
             
             <!-- Simulate game loading -->
             <script>
@@ -147,5 +147,12 @@
     <footer class="footer transition-all duration-500 hover:bg-retro-green-dark">
         <p class="copy animate-fade-in">Copyright © 2025. HERYLL Team.</p>
     </footer>
+
+    
+    <script src="../data/collisions.js"></script>
+    <script src="../scripts/classes.js"></script>
+    <script src="../scripts/counter.js"></script>
+    <script src="../scripts/game.js"></script>
+    <script src="../scripts/main.js"></script>
 </body>
 </html>

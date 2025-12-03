@@ -1,3 +1,6 @@
+const canvas = document.getElementById("gameCanvas");
+const c = canvas.getContext("2d");
+
 
 class Sprite{
     constructor({ position, velocity, image, frames = {max:1}}){

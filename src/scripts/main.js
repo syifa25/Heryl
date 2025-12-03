@@ -1,16 +1,15 @@
-import './style.css'
-import { startGame } from './game.js'
+window.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById("gameCanvas");
 
-const startBtn = document.getElementById('startBtn')
-const canvas = document.getElementById('gameCanvas')
+    if (!canvas) {
+        console.error("Canvas tidak ditemukan!");
+        return;
+    }
 
-startBtn.addEventListener('click', () => {
-
-  startBtn.classList.add('hidden')
-
-
-  canvas.classList.remove('hidden')
-
- 
-  startGame()
-})
+    // Pastikan startGame() ada
+    if (window.startGame) {
+        window.startGame();
+    } else {
+        console.error("startGame() tidak ditemukan! Pastikan game.js dimuat dulu.");
+    }
+});
