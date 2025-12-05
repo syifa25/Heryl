@@ -540,5 +540,121 @@
             }
         });
     </script>
+    <script>
+    // GAME STATE OBJECT 
+    let gameState = {
+        catsSaved: 0,
+        timePlayed: 0,   // in seconds
+        level: 1
+    };
+
+    // FETCH PROGRESS (LOAD) 
+    async function loadProgressFromDB() {
+        const email = localStorage.getItem("heryll_email");
+        if (!email) return;
+
+        try {
+            const res = await fetch("http://localhost:5000/get-progress", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await res.json();
+            if (data.success && data.data) {
+                gameState.catsSaved = data.data.cats_saved || 0;
+                gameState.timePlayed = data.data.time_played || 0;
+                gameState.level = data.data.level || 1;
+
+                updateStatsUI();
+            }
+
+        } catch (err) {
+            console.error("Error load progress:", err);
+        }
+    }
+
+    // SAVE PROGRESS TO DB 
+    async function saveProgressToDB() {
+        const email = localStorage.getItem("heryll_email");
+        if (!email) return;
+
+        try {
+            await fetch("http://localhost:5000/save-progress", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                    catsSaved: gameState.catsSaved,
+                    timePlayed: gameState.timePlayed,
+                    level: gameState.level
+                })
+            });
+        } catch (err) {
+            console.error("Error saving progress:", err);
+        }
+    }
+
+    // UPDATE UI STATS 
+    function updateStatsUI() {
+        document.getElementById("catsSaved").textContent = gameState.catsSaved;
+        document.getElementById("timePlayed").textContent = formatTime(gameState.timePlayed);
+        document.getElementById("currentLevel").textContent = gameState.level;
+    }
+
+    // Format waktu
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60).toString().padStart(2, "0");
+        const s = (sec % 60).toString().padStart(2, "0");
+        return `${m}:${s}`;
+    }
+
+    
+    // AUTO LOAD PROGRESS WHEN USER LOGIN SUKSES 
+    window.addEventListener("load", async () => {
+        const isLoggedIn = localStorage.getItem("heryll_loggedIn");
+
+        if (isLoggedIn === "true") {
+            await loadProgressFromDB();
+        }
+    });
+
+    // =======================================================
+    // === AUTO SAVE EVERY 5 SECONDS =========================
+    // =======================================================
+    setInterval(() => {
+        if (localStorage.getItem("heryll_loggedIn") === "true") {
+            saveProgressToDB();
+        }
+    }, 5000);
+
+
+    // =======================================================
+    // === GAME HOOKS (prepare untuk gamenya nanti) ==========
+    // =======================================================
+
+    // Call this when player saves a cat
+    function addCatSaved() {
+        gameState.catsSaved++;
+        updateStatsUI();
+        saveProgressToDB();
+    }
+
+    // Call every 1 second for timer
+    setInterval(() => {
+        if (localStorage.getItem("heryll_loggedIn") === "true") {
+            gameState.timePlayed++;
+            updateStatsUI();
+        }
+    }, 1000);
+
+    // Call when player reaches next level
+    function levelUp() {
+        gameState.level++;
+        updateStatsUI();
+        saveProgressToDB();
+    }
+    </script>
+
 </body>
 </html>

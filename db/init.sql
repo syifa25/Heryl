@@ -1,0 +1,21 @@
+
+-- users table
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(150),
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- game_data
+CREATE TABLE IF NOT EXISTS game_data (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  level INTEGER DEFAULT 1,
+  score INTEGER DEFAULT 0,
+  cats_saved INTEGER DEFAULT 0,
+  time_played INTEGER DEFAULT 0, -- seconds
+  state JSONB DEFAULT '{}'::jsonb,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
