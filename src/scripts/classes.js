@@ -1,44 +1,30 @@
-const canvas = document.getElementById("gameCanvas");
-const c = canvas.getContext("2d");
-
 class Sprite {
-    constructor({ position, image, scale = 1 }) {
-        this.position = position;
-        this.image = image;
-        this.scale = scale;
+  constructor({ position, velocity, image, frames = { max: 1 }, scale = 1 }) {
+    this.position = position;
+    this.image = image;
+    this.frames = frames;
+    this.scale = scale;
 
-        // tunggu gambar load dulu
-        this.image.onload = () => {
-            this.width = this.image.width * this.scale;
-            this.height = this.image.height * this.scale;
-        };
-    }
+    this.width = 0;
+    this.height = 0;
 
-    draw() {
-        // pakai 1 image saja, tidak ada arah / frames
-        if (!this.width || !this.height) return; // tunggu load
-        c.drawImage(
-            this.image,
-            this.position.x,
-            this.position.y,
-            this.width,
-            this.height
-        );
-    }
-}
+    this.image.onload = () => {
+      this.width = (this.image.width / this.frames.max) * this.scale;
+      this.height = this.image.height * this.scale;
+    };
+  }
 
-class Boundary {
-    static width = 48;
-    static height = 48;
-
-    constructor({ position }) {
-        this.position = position;
-        this.width = Boundary.width;
-        this.height = Boundary.height;
-    }
-
-    draw() {
-        c.fillStyle = "rgba(225, 0, 0, 0.0)";
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    }
+  draw(c) {
+    c.drawImage(
+      this.image,
+      0,
+      0,
+      this.image.width / this.frames.max,
+      this.image.height,
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    );
+  }
 }

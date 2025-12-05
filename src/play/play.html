@@ -95,7 +95,16 @@
                     <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-retro-green-btn mb-4"></div>
                     <p class="text-sm text-gray-600 animate-pulse">Loading Game Assets...</p>
                 </div>
-                
+                <div id="prompt" style="
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
+                    font-size: 20px;
+                    color: white;
+                    font-weight: bold;
+                    text-shadow: 2px 2px 5px black;
+                "></div>
+
                 <!-- Game Canvas -->
                 <canvas id= "gameCanvas" class="animate-fade-in delay-500"></canvas>
                 
@@ -150,9 +159,10 @@
 
     
     <script src="../data/collisions.js"></script>
+    <script src="../data/kucingData.js"></script>
     <script src="../scripts/classes.js"></script>
+    <script type="module" src="../scripts/game.js"></script>
     <script src="../scripts/counter.js"></script>
-    <script src="../scripts/game.js"></script>
     <script src="../scripts/main.js"></script>
 </body>
 </html>
