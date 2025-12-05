@@ -101,7 +101,7 @@ nav ul li a:hover {
 
 .hero {
     height: 800px;
-    background-image: url("img/bg1.gif");
+    background-image: url('../img/bg1.gif');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -147,7 +147,6 @@ nav ul li a:hover {
 
 .main {
     padding: 50px 0;
-    
     margin-top: -1px; 
 }
 
@@ -158,7 +157,7 @@ nav ul li a:hover {
 
 .white-box {
     width: 70%;
-    height: 260px;
+    height: 500px;
     background: white;
     margin: 0 auto;
     border-radius: 10px;
@@ -219,3 +218,49 @@ nav ul li a:hover {
     opacity: 0.5;
 }
 
+/* Animasi delay tambahan untuk Tailwind */
+.delay-100 {
+    animation-delay: 100ms;
+}
+
+.delay-200 {
+    animation-delay: 200ms;
+}
+
+.delay-300 {
+    animation-delay: 300ms;
+}
+
+.delay-400 {
+    animation-delay: 400ms;
+}
+
+.delay-500 {
+    animation-delay: 500ms;
+}
+
+@media (max-width: 768px) {
+    .white-box {
+        width: 95%;
+        height: auto;
+        min-height: 400px;
+    }
+    
+    .feature-card {
+        padding: 1rem !important;
+    }
+    
+    .more-features .grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.feature-card {
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: #83B268;
+    transform: translateY(-5px);
+}
