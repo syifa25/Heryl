@@ -1,3 +1,5 @@
+/* src/play/play.css */
+
 body {
     margin: 0;
     padding: 0;
@@ -68,9 +70,9 @@ nav ul li a {
   color: #FFF2EF;
   font-weight: bold;
   text-align: center;
-  padding: 8px 24px;
+  padding: 8px 16px;
   border-radius: 0; 
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
   font-family: 'Press Start 2P', monospace;
   box-shadow: none; 
@@ -154,7 +156,7 @@ nav ul li a:not(.active):hover {
 }
 
 .white-box {
-    width: 90%;
+    width: 70%;
     height: 500px;
     background: white;
     margin: 0 auto;
@@ -221,8 +223,16 @@ nav ul li a:not(.active):hover {
     animation-delay: 100ms;
 }
 
+.delay-200 {
+    animation-delay: 200ms;
+}
+
 .delay-300 {
     animation-delay: 300ms;
+}
+
+.delay-400 {
+    animation-delay: 400ms;
 }
 
 .delay-500 {
@@ -233,27 +243,193 @@ nav ul li a:not(.active):hover {
     animation-delay: 700ms;
 }
 
-/* Game specific styles */
-#game-container {
-    position: relative;
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .wrapper, nav {
+    width: 95%;
+  }
+  
+  nav ul li a {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .logo a {
+    font-size: 24px;
+  }
+  
+  .white-box {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+  
+  .white-box {
+    width: 95%;
+    height: 400px;
+  }
+  
+  .game-stats .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 1000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.auth-tabs {
+    display: flex;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    background: #f8f8f8;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s;
+    border: none;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.auth-tab.active {
+    background: white;
+    color: #83B268;
+    border-bottom: 3px solid #83B268;
+}
+
+.auth-tab:hover {
+    background: #e8f5e8;
+}
+
+.auth-form {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 10px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'Press Start 2P', monospace;
+    transition: border 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #83B268;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    background: #83B268;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.auth-btn:hover {
+    background: #6fa155;
+}
+
+.switch-auth {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 10px;
+    color: #666;
+}
+
+.switch-auth span {
+    color: #4A90E2;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+/* Styling khusus untuk game */
+#gameCanvas {
+    width: 100%;
+    height: 100%;
+    background: #000;
 }
 
 #loading-screen {
-    transition: opacity 0.5s ease-out;
-}
-
-.hidden {
-    display: none;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 #controls-info {
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.8);
 }
 
-.game-stats {
-    margin-top: 2rem;
+/* Styling untuk stats game */
+.game-stats .bg-white {
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
 }
 
+.game-stats .bg-white:hover {
+    border-color: #83B268;
+    transform: translateY(-5px);
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .white-box {

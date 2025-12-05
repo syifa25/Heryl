@@ -1,3 +1,5 @@
+/* src/about/about.css */
+
 body {
     margin: 0;
     padding: 0;
@@ -52,7 +54,7 @@ nav ul li {
   float: left;
 }
 
-/* Style untuk menu aktif */
+/* Style untuk menu aktif (About) */
 nav ul li a.active {
     color: #6fa155;
     text-decoration: underline;
@@ -68,9 +70,9 @@ nav ul li a {
   color: #FFF2EF;
   font-weight: bold;
   text-align: center;
-  padding: 8px 24px;
+  padding: 8px 16px;
   border-radius: 0; 
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
   font-family: 'Press Start 2P', monospace;
   box-shadow: none; 
@@ -99,7 +101,7 @@ nav ul li a:not(.active):hover {
 
 .hero {
     height: 800px;
-    background-image: url('../img/bg1.gif');
+    background-image: url("../img/bg1.gif");
     background-size: cover;
     background-position: center;
     display: flex;
@@ -154,25 +156,47 @@ nav ul li a:not(.active):hover {
 }
 
 .white-box {
-    width: 90%;
-    height: 500px;
+    width: 70%;
+    min-height: 500px;
     background: white;
     margin: 0 auto;
     border-radius: 10px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
 }
 
-.feature-description {
-    font-size: 14px;
-    line-height: 1.6;
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+}
+
+.character-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    object-fit: contain;
+}
+
+.about-text {
+    font-size: 12px;
+    line-height: 1.8;
     color: #333;
-    margin: 30px auto 0 auto;
-    max-width: 600px;
+    max-width: 800px;
     padding: 0 20px;
+    text-align: left;
 }
 
-.feature-description strong {
+.about-text strong {
     color: #000;
+    font-size: 13px;
 }
 
 .tiny-note {
@@ -186,6 +210,7 @@ nav ul li a:not(.active):hover {
     padding: 40px 0;
     background-color: #8ca443;
     color: black;
+    width: 100%;
 }
 
 .contact-title {
@@ -208,6 +233,9 @@ nav ul li a:not(.active):hover {
 .footer-small {
     font-size: 10px;
     opacity: 0.75;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .copy {
@@ -215,15 +243,6 @@ nav ul li a:not(.active):hover {
     font-size: 10px;
     opacity: 0.5;
 }
-.abt {
-    width: auto;
-    height: 100%;
-    max-height: 450px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-
 
 /* Animasi delay tambahan untuk Tailwind */
 .delay-100 {
@@ -238,47 +257,175 @@ nav ul li a:not(.active):hover {
     animation-delay: 500ms;
 }
 
-.delay-700 {
-    animation-delay: 700ms;
+/* Responsive adjustments - Sama dengan Tutorial */
+@media (max-width: 1200px) {
+  .wrapper, nav {
+    width: 95%;
+  }
+  
+  nav ul li a {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .logo a {
+    font-size: 24px;
+  }
+  
+  .white-box {
+    width: 90%;
+  }
 }
 
-/* Game specific styles */
-#game-container {
-    position: relative;
-}
-
-#loading-screen {
-    transition: opacity 0.5s ease-out;
-}
-
-.hidden {
-    display: none;
-}
-
-#controls-info {
-    backdrop-filter: blur(5px);
-}
-
-.game-stats {
-    margin-top: 2rem;
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
-    .white-box {
-        width: 95%;
-        height: 400px;
-    }
-    
-    #controls-info {
-        bottom: 2px;
-        left: 2px;
-        padding: 2px;
-        font-size: 8px;
-    }
-    
-    .game-stats .grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
+  .menu {
+    display: none;
+  }
+  
+  .white-box {
+    width: 95%;
+    min-height: 400px;
+  }
+  
+  .about-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .character-image {
+    max-width: 300px;
+  }
+  
+  .about-text {
+    font-size: 11px;
+    text-align: center;
+  }
+}
+
+/* Modal Styles - Sama dengan Tutorial */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 1000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.auth-tabs {
+    display: flex;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    background: #f8f8f8;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s;
+    border: none;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.auth-tab.active {
+    background: white;
+    color: #83B268;
+    border-bottom: 3px solid #83B268;
+}
+
+.auth-tab:hover {
+    background: #e8f5e8;
+}
+
+.auth-form {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 10px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'Press Start 2P', monospace;
+    transition: border 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #83B268;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    background: #83B268;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.auth-btn:hover {
+    background: #6fa155;
+}
+
+.switch-auth {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 10px;
+    color: #666;
+}
+
+.switch-auth span {
+    color: #4A90E2;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-modal:hover {
+    color: #333;
 }

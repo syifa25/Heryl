@@ -20,10 +20,12 @@
                         'retro-green-light': '#A7B65D',
                         'retro-green-btn': '#83B268',
                         'retro-green-btn-hover': '#6fa155',
+                        'retro-blue': '#4A90E2',
+                        'retro-blue-hover': '#357ABD',
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.8s ease-in-out',
-                        'slide-up': 'slideUp 1s ease-out',
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
                         'pulse-slow': 'pulse 3s infinite',
                         'bounce-slow': 'bounce 2s infinite',
                         'float': 'float 3s ease-in-out infinite',
@@ -35,7 +37,7 @@
                             '100%': { opacity: '1' },
                         },
                         slideUp: {
-                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' },
                         },
                         float: {
@@ -51,29 +53,84 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="./FeaturesPage.css">
+    <link rel="stylesheet" href="FeaturesPage.css">
 </head>
 <body class="font-press-start bg-retro-green">
     <header>
-        <nav class="sticky top-0 z-50 bg-retro-green-light transition-all duration-300 hover:shadow-lg">
+        <nav class="sticky top-0 z-50">
             <div class="wrapper">
-                <div class="logo animate-pulse-slow">
-                    <a href="#" class="transition-all duration-300 hover:scale-105">HERYLL</a>
+                <div class="logo">
+                    <a href="../../index.html" class="transition-all duration-300 hover:scale-105">HERYLL</a>
                 </div>
                 <div class="menu">
                     <ul>
-                        <li><a href="../../index.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">HOME</a></li>
-                        <li><a href="../tutorial/tutorial.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">TUTORIAL</a></li>
-                        <li><a href="../features/FeaturesPage.html" class="active transition-all duration-300 transform hover:scale-105">FEATURES</a></li>
-                        <li><a href="../about/about.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">ABOUT</a></li>
-                        <li><a href="../play/play.html" class="btn-play transition-all duration-300 transform hover:scale-110">PLAY</a></li>
+                        <li><a href="../../index.html" class="transition-all duration-300 hover:text-retro-green-btn">HOME</a></li>
+                        <li><a href="../tutorial/tutorial.html" class="transition-all duration-300 hover:text-retro-green-btn">TUTORIAL</a></li>
+                        <li><a href="FeaturesPage.html" class="active transition-all duration-300">FEATURES</a></li>
+                        <li><a href="../about/about.html" class="transition-all duration-300 hover:text-retro-green-btn">ABOUT</a></li>
+                        <li><a href="#" id="loginTab" class="transition-all duration-300 hover:text-retro-blue transform hover:scale-105">LOGIN</a></li>
+                        <li><a href="../play/play.html" class="btn-play transition-all duration-300 hover:scale-105">PLAY</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <section class="hero animate-fade-in">
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">LOGIN</button>
+                <button class="auth-tab" data-tab="signin">SIGN IN</button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form">
+                <h2 class="text-center text-lg mb-6">WELCOME BACK!</h2>
+                <div class="form-group">
+                    <label for="loginEmail">EMAIL / USERNAME</label>
+                    <input type="text" id="loginEmail" placeholder="Enter email or username">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">PASSWORD</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password">
+                </div>
+                <button class="auth-btn" id="submitLogin">LOGIN</button>
+                <div class="switch-auth">
+                    Don't have an account? <span id="switchToSignin">Sign In</span>
+                </div>
+            </div>
+            
+            <!-- Sign In Form -->
+            <div id="signinForm" class="auth-form" style="display: none;">
+                <h2 class="text-center text-lg mb-6">CREATE ACCOUNT</h2>
+                <div class="form-group">
+                    <label for="signinUsername">USERNAME</label>
+                    <input type="text" id="signinUsername" placeholder="Choose username">
+                </div>
+                <div class="form-group">
+                    <label for="signinEmail">EMAIL</label>
+                    <input type="email" id="signinEmail" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="signinPassword">PASSWORD</label>
+                    <input type="password" id="signinPassword" placeholder="Create password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">CONFIRM PASSWORD</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm password">
+                </div>
+                <button class="auth-btn" id="submitSignin">CREATE ACCOUNT</button>
+                <div class="switch-auth">
+                    Already have an account? <span id="switchToLogin">Login</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero">
         <h1 class="hero-title animate-slide-up">FEATURES</h1>
         <p class="hero-sub animate-slide-up delay-300">Game features</p>
         <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
@@ -82,48 +139,48 @@
     </section>
 
     <section class="main">
-        <h2 class="main-title animate-pulse-slow">What can you do in-game?</h2>
-        <div class="white-box transition-all duration-500 hover:scale-105 hover:shadow-xl animate-float">
+        <h2 class="main-title">What can you do in-game?</h2>
+        <div class="white-box transition-all duration-500 hover:scale-105 hover:shadow-xl">
             <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-8">
                 <div class="grid grid-cols-2 gap-6 w-full max-w-4xl">
-                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-100">
-                        <i class="fas fa-paw text-4xl text-retro-green-btn mb-4 animate-wiggle"></i>
+                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl">
+                        <i class="fas fa-paw text-4xl text-retro-green-btn mb-4"></i>
                         <h3 class="text-sm mb-3">PET CATS</h3>
                         <p class="text-xs text-gray-600">Show love to all the cute cats you find</p>
                     </div>
-                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-200">
-                        <i class="fas fa-hand-holding-heart text-4xl text-retro-green-btn mb-4 animate-bounce-slow"></i>
+                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl">
+                        <i class="fas fa-hand-holding-heart text-4xl text-retro-green-btn mb-4"></i>
                         <h3 class="text-sm mb-3">TAKE CATS</h3>
                         <p class="text-xs text-gray-600">Rescue and collect stray cats</p>
                     </div>
-                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-300">
-                        <i class="fas fa-fish text-4xl text-retro-green-btn mb-4 animate-float"></i>
+                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl">
+                        <i class="fas fa-fish text-4xl text-retro-green-btn mb-4"></i>
                         <h3 class="text-sm mb-3">FEED CATS</h3>
                         <p class="text-xs text-gray-600">Keep your feline friends happy and healthy</p>
                     </div>
-                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-400">
-                        <i class="fas fa-user-slash text-4xl text-retro-green-btn mb-4 animate-pulse-slow"></i>
+                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl">
+                        <i class="fas fa-user-slash text-4xl text-retro-green-btn mb-4"></i>
                         <h3 class="text-sm mb-3">IGNORE CATS</h3>
                         <p class="text-xs text-gray-600">Choose your own adventure style</p>
                     </div>
                 </div>
             </div>
         </div>
-        <p class="feature-description animate-fade-in delay-500">
+        <p class="feature-description">
             <strong>Interact with cats:</strong> Pet the cats! Take the cats! Feed the cats! Ignore the cats.
         </p>
 
         <div class="more-features mt-16 max-w-4xl mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                <div class="bg-white rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 animate-slide-up delay-100">
-                    <div class="text-retro-green-btn text-3xl mb-4 animate-spin-slow">
+                <div class="bg-white rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105">
+                    <div class="text-retro-green-btn text-3xl mb-4">
                         <i class="fas fa-map-marked-alt"></i>
                     </div>
                     <h3 class="text-sm mb-3">EXPLORE WORLDS</h3>
                     <p class="text-xs text-gray-600">Discover multiple unique environments</p>
                 </div>
-                <div class="bg-white rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 animate-slide-up delay-200">
-                    <div class="text-retro-green-btn text-3xl mb-4 animate-bounce-slow">
+                <div class="bg-white rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105">
+                    <div class="text-retro-green-btn text-3xl mb-4">
                         <i class="fas fa-star"></i>
                     </div>
                     <h3 class="text-sm mb-3">ACHIEVEMENTS</h3>
@@ -133,33 +190,161 @@
         </div>
     </section>
 
-    <footer class="footer transition-all duration-500 hover:bg-retro-green-dark">
-        <h3 class="contact-title animate-fade-in">CONTACTS</h3>
+    <footer class="footer">
+        <h3 class="contact-title">CONTACTS</h3>
         <div class="icons">
             <i class="fa-brands fa-instagram transition-all duration-300 transform hover:scale-125 hover:text-pink-500 cursor-pointer"></i>
             <i class="fa-brands fa-twitter transition-all duration-300 transform hover:scale-125 hover:text-blue-400 cursor-pointer"></i>
             <i class="fa-brands fa-tiktok transition-all duration-300 transform hover:scale-125 hover:text-black cursor-pointer"></i>
             <i class="fa-brands fa-facebook transition-all duration-300 transform hover:scale-125 hover:text-blue-600 cursor-pointer"></i>
         </div>
-        <p class="footer-small animate-fade-in delay-300">
+        <p class="footer-small">
             For business or support, our team is ready to help you anytime.
         </p>
-        <p class="copy animate-fade-in delay-500">Copyright © 2025. HERYLL Team.</p>
+        <p class="copy">Copyright © 2025. HERYLL Team.</p>
     </footer>
 
-    <style>
-        .animate-spin-slow {
-            animation: spin 4s linear infinite;
-        }
-        
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        .feature-card:hover i {
-            animation-duration: 0.5s;
-        }
-    </style>
+    <script>
+        // Auth Modal Functionality - Sama dengan home page
+        const authModal = document.getElementById('authModal');
+        const loginTab = document.getElementById('loginTab');
+        const closeModal = document.getElementById('closeModal');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const loginForm = document.getElementById('loginForm');
+        const signinForm = document.getElementById('signinForm');
+        const switchToSignin = document.getElementById('switchToSignin');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const submitLogin = document.getElementById('submitLogin');
+        const submitSignin = document.getElementById('submitSignin');
+
+        // Open modal when login tab is clicked
+        loginTab.addEventListener('click', (e) => {
+            e.preventDefault();
+            authModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            authModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Switch between login and signin tabs
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                authTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabType = tab.getAttribute('data-tab');
+                if (tabType === 'login') {
+                    loginForm.style.display = 'block';
+                    signinForm.style.display = 'none';
+                } else {
+                    loginForm.style.display = 'none';
+                    signinForm.style.display = 'block';
+                }
+            });
+        });
+
+        // Switch to signin from login form link
+        switchToSignin.addEventListener('click', () => {
+            authTabs.forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-tab="signin"]').classList.add('active');
+            loginForm.style.display = 'none';
+            signinForm.style.display = 'block';
+        });
+
+        // Switch to login from signin form link
+        switchToLogin.addEventListener('click', () => {
+            authTabs.forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-tab="login"]').classList.add('active');
+            signinForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        // Login form submission
+        submitLogin.addEventListener('click', () => {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                alert('Please fill in all fields!');
+                return;
+            }
+            
+            alert(`Login successful! Welcome ${email}`);
+            authModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            loginTab.innerHTML = '<i class="fas fa-user mr-2"></i>PROFILE';
+            
+            // Simpan ke localStorage
+            localStorage.setItem('heryll_loggedIn', 'true');
+            localStorage.setItem('heryll_username', email.split('@')[0]);
+        });
+
+        // Signin form submission
+        submitSignin.addEventListener('click', () => {
+            const username = document.getElementById('signinUsername').value;
+            const email = document.getElementById('signinEmail').value;
+            const password = document.getElementById('signinPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!username || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields!');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters!');
+                return;
+            }
+            
+            alert(`Account created successfully! Welcome ${username}`);
+            authModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            loginTab.innerHTML = '<i class="fas fa-user mr-2"></i>PROFILE';
+            
+            // Simpan ke localStorage
+            localStorage.setItem('heryll_loggedIn', 'true');
+            localStorage.setItem('heryll_username', username);
+            
+            authTabs.forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-tab="login"]').classList.add('active');
+            signinForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && authModal.style.display === 'block') {
+                authModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Check if user is logged in from localStorage
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem('heryll_loggedIn');
+            const username = localStorage.getItem('heryll_username');
+            
+            if (isLoggedIn === 'true' && username) {
+                loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
+            }
+        });
+    </script>
 </body>
 </html>
