@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Game - HERYLL</title>
+    <title>HERYLL - Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/home/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="play.css">
     <script>
         tailwind.config = {
             theme: {
@@ -27,13 +27,10 @@
                         'success-green': '#10b981',
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.8s ease-in-out',
-                        'slide-up': 'slideUp 1s ease-out',
-                        'pulse-slow': 'pulse 3s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
                         'bounce-slow': 'bounce 2s infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                        'game-glow': 'gameGlow 2s ease-in-out infinite',
-                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
                         'shake': 'shake 0.5s ease-in-out',
                     },
                     keyframes: {
@@ -44,18 +41,6 @@
                         slideUp: {
                             '0%': { transform: 'translateY(30px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        gameGlow: {
-                            '0%, 100%': { boxShadow: '0 0 5px rgba(131, 178, 104, 0.5)' },
-                            '50%': { boxShadow: '0 0 20px rgba(131, 178, 104, 0.8)' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { boxShadow: '0 0 5px rgba(74, 144, 226, 0.5)' },
-                            '50%': { boxShadow: '0 0 15px rgba(74, 144, 226, 0.8)' },
                         },
                         shake: {
                             '0%, 100%': { transform: 'translateX(0)' },
@@ -68,22 +53,21 @@
         }
     </script>
 </head>
-
 <body class="font-press-start bg-retro-green">
     <header>
         <nav class="sticky top-0 z-50">
             <div class="wrapper">
                 <div class="logo">
-                    <a href="../../index.html" class="transition-all duration-300 hover:scale-105">HERYLL</a>
+                    <a href="./index.html" class="transition-all duration-300 hover:scale-105">HERYLL</a>
                 </div>
                 <div class="menu">
                     <ul>
-                        <li><a href="../../index.html" class="transition-all duration-300 hover:text-retro-green-btn">HOME</a></li>
-                        <li><a href="../tutorial/tutorial.html" class="transition-all duration-300 hover:text-retro-green-btn">TUTORIAL</a></li>
-                        <li><a href="../features/FeaturesPage.html" class="transition-all duration-300 hover:text-retro-green-btn">FEATURES</a></li>
-                        <li><a href="../about/about.html" class="transition-all duration-300 hover:text-retro-green-btn">ABOUT</a></li>
+                        <li><a href="./index.html" class="active transition-all duration-300">HOME</a></li>
+                        <li><a href="./src/tutorial/tutorial.html" class="transition-all duration-300 hover:text-retro-green-btn">TUTORIAL</a></li>
+                        <li><a href="./src/features/FeaturesPage.html" class="transition-all duration-300 hover:text-retro-green-btn">FEATURES</a></li>
+                        <li><a href="./src/about/about.html" class="transition-all duration-300 hover:text-retro-green-btn">ABOUT</a></li>
                         <li><a href="#" id="loginTab" class="transition-all duration-300 hover:text-retro-blue transform hover:scale-105">LOGIN</a></li>
-                        <li><a href="../play/play.html" class="btn-play transition-all duration-300 hover:scale-105">PLAY</a></li>
+                        <li><a href="./src/play/play.html" class="btn-play transition-all duration-300 hover:scale-105">PLAY</a></li>
                     </ul>
                 </div>
             </div>
@@ -149,97 +133,69 @@
 
     <section class="hero">
         <h1 class="hero-title animate-slide-up">HERYLL</h1>
-        <p class="hero-sub animate-slide-up delay-300">Save stray cats and become hero</p>
+        <p class="hero-sub animate-slide-up delay-300">Save stray cats and become a hero!</p>
         <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
             <i class="fas fa-chevron-down text-white text-2xl"></i>
         </div>
     </section>
 
     <section class="main">
-        <h2 class="main-title">PLAYING NOW</h2>
-        <div class="white-box transition-all duration-500 hover:scale-105">
-            <div id="game-container" class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg relative overflow-hidden">
-                <div id="login-required" class="absolute inset-0 bg-white bg-opacity-90 flex flex-col items-center justify-center z-20">
-                    <i class="fas fa-lock text-4xl text-retro-blue mb-4"></i>
-                    <h3 class="text-lg mb-2">LOGIN REQUIRED</h3>
-                    <p class="text-sm text-gray-600 mb-4">Please login or create an account to play</p>
-                    <button id="loginToPlay" class="auth-btn w-auto px-6">LOGIN / SIGN UP</button>
-                </div>
-                
-                <div id="loading-screen" class="absolute inset-0 bg-white bg-opacity-90 flex flex-col items-center justify-center z-10" style="display: none;">
-                    <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-retro-green-btn mb-4"></div>
-                    <p class="text-sm text-gray-600 animate-pulse">Loading Game Assets...</p>
-                </div>
-                
-                <canvas id="gameCanvas" class="animate-fade-in delay-500" style="display: none;"></canvas>
-                
-                <div id="controls-info" class="absolute bottom-4 left-4 bg-black bg-opacity-70 text-white p-3 rounded-lg text-xs animate-slide-up delay-700" style="display: none;">
-                    <p class="mb-1">W A D S : Move</p>
-                    <p class="mb-1">SPACE : Jump</p>
-                    <p>ESC : Pause</p>
+        <h2 class="main-title animate-fade-in">WELCOME TO HERYLL!</h2>
+        <div class="white-box transition-all duration-500 hover:scale-105 hover:shadow-xl">
+            <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-8">
+                <i class="fas fa-cat text-6xl text-retro-green-btn mb-6 animate-bounce-slow"></i>
+                <h3 class="text-sm mb-4 text-gray-700">YOUR CAT-RESCUE ADVENTURE AWAITS!</h3>
+                <div class="text-center max-w-2xl">
+                    <p class="text-xs text-gray-600 mb-6">
+                        Join Heryll, a brave little girl on her mission to save all stray cats in the city. 
+                        Explore vibrant worlds, overcome obstacles, and become the hero you were meant to be!
+                    </p>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                        <a href="./src/tutorial/tutorial.html" class="bg-retro-blue hover:bg-retro-blue-hover text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-book mr-2"></i>VIEW TUTORIAL
+                        </a>
+                        <button id="playNowBtn" class="bg-retro-green-btn hover:bg-retro-green-btn-hover text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-play mr-2"></i>PLAY NOW
+                        </button>
+                    </div>
                 </div>
             </div>
-            
-            <script>
-                // Check login status on page load
-                window.addEventListener('load', () => {
-                    const isLoggedIn = localStorage.getItem('heryll_loggedIn');
-                    const username = localStorage.getItem('heryll_username');
-                    
-                    if (isLoggedIn === 'true' && username) {
-                        // User is logged in, show game
-                        document.getElementById('login-required').style.display = 'none';
-                        document.getElementById('loading-screen').style.display = 'flex';
-                        document.getElementById('gameCanvas').style.display = 'block';
-                        document.getElementById('controls-info').style.display = 'block';
-                        loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
-                        
-                        // Simulate game loading
-                        setTimeout(() => {
-                            document.getElementById('loading-screen').style.display = 'none';
-                        }, 2000);
-                    } else {
-                        // User not logged in
-                        document.getElementById('login-required').style.display = 'flex';
-                    }
-                });
-            </script>
         </div>
         
-        <div class="game-stats mt-8 max-w-4xl mx-auto px-4">
+        <div class="quick-features mt-12 max-w-4xl mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg p-4 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-100">
-                    <div class="flex items-center justify-center mb-2">
-                        <i class="fas fa-cat text-retro-green-btn text-2xl mr-2"></i>
-                        <span class="text-lg font-bold">Cats Saved</span>
+                <div class="bg-white rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-100">
+                    <div class="text-retro-green-btn text-3xl mb-4">
+                        <i class="fas fa-gamepad"></i>
                     </div>
-                    <p id="catsSaved" class="text-3xl text-retro-green-btn font-bold">0</p>
+                    <h3 class="text-sm mb-3">EASY TO PLAY</h3>
+                    <p class="text-xs text-gray-600">Simple controls, challenging gameplay</p>
                 </div>
-                <div class="bg-white rounded-lg p-4 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-300">
-                    <div class="flex items-center justify-center mb-2">
-                        <i class="fas fa-clock text-retro-green-btn text-2xl mr-2"></i>
-                        <span class="text-lg font-bold">Time Played</span>
+                <div class="bg-white rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-300">
+                    <div class="text-retro-green-btn text-3xl mb-4">
+                        <i class="fas fa-paw"></i>
                     </div>
-                    <p id="timePlayed" class="text-3xl text-retro-green-btn font-bold">00:00</p>
+                    <h3 class="text-sm mb-3">RESCUE CATS</h3>
+                    <p class="text-xs text-gray-600">Find and save adorable stray cats</p>
                 </div>
-                <div class="bg-white rounded-lg p-4 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-500">
-                    <div class="flex items-center justify-center mb-2">
-                        <i class="fas fa-trophy text-retro-green-btn text-2xl mr-2"></i>
-                        <span class="text-lg font-bold">Level</span>
+                <div class="bg-white rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-500">
+                    <div class="text-retro-green-btn text-3xl mb-4">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <p id="currentLevel" class="text-3xl text-retro-green-btn font-bold">1</p>
+                    <h3 class="text-sm mb-3">PROGRESS TRACKING</h3>
+                    <p class="text-xs text-gray-600">Track your stats and achievements</p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer class="footer">
-        <p class="copy">Copyright © 2025. HERYLL Team.</p>
+        <p class="copy animate-fade-in">Copyright © 2025. HERYLL Team.</p>
     </footer>
 
-    <!-- Tambahkan script untuk auth modal -->
     <script>
-        // In-memory user database (simulate backend)
+        // In-memory user database (shared with other pages)
         let usersDatabase = JSON.parse(localStorage.getItem('heryll_users')) || [];
 
         // DOM Elements
@@ -253,7 +209,7 @@
         const switchToLogin = document.getElementById('switchToLogin');
         const submitLogin = document.getElementById('submitLogin');
         const submitSignup = document.getElementById('submitSignup');
-        const loginToPlay = document.getElementById('loginToPlay');
+        const playNowBtn = document.getElementById('playNowBtn');
 
         // Helper functions
         function showError(elementId, message) {
@@ -295,11 +251,19 @@
             document.body.style.overflow = 'hidden';
         });
 
-        // Open modal when login to play button is clicked
-        loginToPlay.addEventListener('click', (e) => {
-            e.preventDefault();
-            authModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
+        // Play Now button click handler
+        playNowBtn.addEventListener('click', () => {
+            const isLoggedIn = localStorage.getItem('heryll_loggedIn');
+            
+            if (isLoggedIn === 'true') {
+                // User is logged in, redirect to play page
+                window.location.href = './src/play/play.html';
+            } else {
+                // User not logged in, show login modal
+                alert('Please login or create an account to play!');
+                authModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
         });
 
         // Close modal
@@ -407,17 +371,6 @@
                 alert(`Login successful! Welcome ${user.username}`);
                 authModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
-                
-                // Show game
-                document.getElementById('login-required').style.display = 'none';
-                document.getElementById('loading-screen').style.display = 'flex';
-                document.getElementById('gameCanvas').style.display = 'block';
-                document.getElementById('controls-info').style.display = 'block';
-                
-                // Simulate game loading
-                setTimeout(() => {
-                    document.getElementById('loading-screen').style.display = 'none';
-                }, 2000);
             }, 500);
         });
 
@@ -499,16 +452,8 @@
                 authModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
                 
-                // Show game
-                document.getElementById('login-required').style.display = 'none';
-                document.getElementById('loading-screen').style.display = 'flex';
-                document.getElementById('gameCanvas').style.display = 'block';
-                document.getElementById('controls-info').style.display = 'block';
-                
-                // Simulate game loading
-                setTimeout(() => {
-                    document.getElementById('loading-screen').style.display = 'none';
-                }, 2000);
+                // Show welcome message
+                alert(`Welcome to HERYLL, ${username}! Your adventure begins now.`);
             }, 1500);
         });
 
@@ -523,7 +468,7 @@
             }
         });
 
-        // Initialize on page load
+        // Check if user is logged in from localStorage
         window.addEventListener('load', () => {
             const isLoggedIn = localStorage.getItem('heryll_loggedIn');
             const username = localStorage.getItem('heryll_username');
