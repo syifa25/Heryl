@@ -3,60 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Features Page</title>
+    <title>Features - HERYLL</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="FeaturesPage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'press-start': ['"Press Start 2P"', 'monospace'],
+                    },
+                    colors: {
+                        'retro-green': '#a8bf53',
+                        'retro-green-dark': '#8ca443',
+                        'retro-green-light': '#A7B65D',
+                        'retro-green-btn': '#83B268',
+                        'retro-green-btn-hover': '#6fa155',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 1s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="./FeaturesPage.css">
 </head>
-<body>
+<body class="font-press-start bg-retro-green">
     <header>
-        <nav>
+        <nav class="sticky top-0 z-50 bg-retro-green-light transition-all duration-300 hover:shadow-lg">
             <div class="wrapper">
-            <div class="logo">
-                <a href="#">HERYLL</a>
-            </div>
-            <div class="menu">
-                <ul>
-                <li><a href="home.html">HOME</a></li>
-                <li><a href="#tutorial">TUTORIAL</a></li>
-                <li><a href="#features" class="active">FEATURES</a></li>
-                <li><a href="#about">ABOUT</a></li>
-                <li><a href="#play" class="btn-play">PLAY</a></li>
-
-                </ul>
-            </div>
+                <div class="logo animate-pulse-slow">
+                    <a href="#" class="transition-all duration-300 hover:scale-105">HERYLL</a>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="../../index.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">HOME</a></li>
+                        <li><a href="../tutorial/tutorial.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">TUTORIAL</a></li>
+                        <li><a href="../features/FeaturesPage.html" class="active transition-all duration-300 transform hover:scale-105">FEATURES</a></li>
+                        <li><a href="../about/about.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">ABOUT</a></li>
+                        <li><a href="../play/play.html" class="btn-play transition-all duration-300 transform hover:scale-110">PLAY</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
-    <section class="hero">
-        <h1 class="hero-title">FEATURES</h1>
-        <p class="hero-sub">Game features</p>
-    </section>
-    <!--tes-->
-    <section class="main">
-        <h2 class="main-title">What can you do in-game?</h2>
-        <div class="white-box">
-            <!-- nanti diisi screenshot game -->
+
+    <section class="hero animate-fade-in">
+        <h1 class="hero-title animate-slide-up">FEATURES</h1>
+        <p class="hero-sub animate-slide-up delay-300">Game features</p>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+            <i class="fas fa-chevron-down text-white text-2xl"></i>
         </div>
-        <p class="feature-description">
+    </section>
+
+    <section class="main">
+        <h2 class="main-title animate-pulse-slow">What can you do in-game?</h2>
+        <div class="white-box transition-all duration-500 hover:scale-105 hover:shadow-xl animate-float">
+            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-8">
+                <div class="grid grid-cols-2 gap-6 w-full max-w-4xl">
+                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-100">
+                        <i class="fas fa-paw text-4xl text-retro-green-btn mb-4 animate-wiggle"></i>
+                        <h3 class="text-sm mb-3">PET CATS</h3>
+                        <p class="text-xs text-gray-600">Show love to all the cute cats you find</p>
+                    </div>
+                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-200">
+                        <i class="fas fa-hand-holding-heart text-4xl text-retro-green-btn mb-4 animate-bounce-slow"></i>
+                        <h3 class="text-sm mb-3">TAKE CATS</h3>
+                        <p class="text-xs text-gray-600">Rescue and collect stray cats</p>
+                    </div>
+                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-300">
+                        <i class="fas fa-fish text-4xl text-retro-green-btn mb-4 animate-float"></i>
+                        <h3 class="text-sm mb-3">FEED CATS</h3>
+                        <p class="text-xs text-gray-600">Keep your feline friends happy and healthy</p>
+                    </div>
+                    <div class="feature-card bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-400">
+                        <i class="fas fa-user-slash text-4xl text-retro-green-btn mb-4 animate-pulse-slow"></i>
+                        <h3 class="text-sm mb-3">IGNORE CATS</h3>
+                        <p class="text-xs text-gray-600">Choose your own adventure style</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="feature-description animate-fade-in delay-500">
             <strong>Interact with cats:</strong> Pet the cats! Take the cats! Feed the cats! Ignore the cats.
         </p>
+
+        <div class="more-features mt-16 max-w-4xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                <div class="bg-white rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 animate-slide-up delay-100">
+                    <div class="text-retro-green-btn text-3xl mb-4 animate-spin-slow">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 class="text-sm mb-3">EXPLORE WORLDS</h3>
+                    <p class="text-xs text-gray-600">Discover multiple unique environments</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 animate-slide-up delay-200">
+                    <div class="text-retro-green-btn text-3xl mb-4 animate-bounce-slow">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="text-sm mb-3">ACHIEVEMENTS</h3>
+                    <p class="text-xs text-gray-600">Unlock special rewards and badges</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <footer class="footer">
-        <h3 class="contact-title">CONTACTS</h3>
+    <footer class="footer transition-all duration-500 hover:bg-retro-green-dark">
+        <h3 class="contact-title animate-fade-in">CONTACTS</h3>
         <div class="icons">
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-twitter"></i>
-            <i class="fa-brands fa-tiktok"></i>
-            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-instagram transition-all duration-300 transform hover:scale-125 hover:text-pink-500 cursor-pointer"></i>
+            <i class="fa-brands fa-twitter transition-all duration-300 transform hover:scale-125 hover:text-blue-400 cursor-pointer"></i>
+            <i class="fa-brands fa-tiktok transition-all duration-300 transform hover:scale-125 hover:text-black cursor-pointer"></i>
+            <i class="fa-brands fa-facebook transition-all duration-300 transform hover:scale-125 hover:text-blue-600 cursor-pointer"></i>
         </div>
-        <p class="footer-small">
+        <p class="footer-small animate-fade-in delay-300">
             For business or support, our team is ready to help you anytime.
         </p>
-
-        <p class="copy">Copyright © 2025. HERYLL Team.</p>
+        <p class="copy animate-fade-in delay-500">Copyright © 2025. HERYLL Team.</p>
     </footer>
 
+    <style>
+        .animate-spin-slow {
+            animation: spin 4s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .feature-card:hover i {
+            animation-duration: 0.5s;
+        }
+    </style>
 </body>
 </html>
