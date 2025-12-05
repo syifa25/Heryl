@@ -170,8 +170,20 @@
                     <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-retro-green-btn mb-4"></div>
                     <p class="text-sm text-gray-600 animate-pulse">Loading Game Assets...</p>
                 </div>
-                
-                <canvas id="gameCanvas" class="animate-fade-in delay-500" style="display: none;"></canvas>
+                <div id="prompt" style="
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
+                    font-size: 20px;
+                    color: white;
+                    font-weight: bold;
+                    text-shadow: 2px 2px 5px black;
+                "></div>
+
+                <!-- Game Canvas -->
+                <canvas id= "gameCanvas" class="animate-fade-in delay-500"></canvas>
+
+         
                 
                 <div id="controls-info" class="absolute bottom-4 left-4 bg-black bg-opacity-70 text-white p-3 rounded-lg text-xs animate-slide-up delay-700" style="display: none;">
                     <p class="mb-1">W A D S : Move</p>
@@ -237,6 +249,13 @@
         <p class="copy">Copyright © 2025. HERYLL Team.</p>
     </footer>
 
+    
+    <script src="../data/collisions.js"></script>
+    <script src="../data/kucingData.js"></script>
+    <script src="../scripts/classes.js"></script>
+    <script type="module" src="../scripts/game.js"></script>
+    <script src="../scripts/counter.js"></script>
+    <script src="../scripts/main.js"></script>
     <!-- Tambahkan script untuk auth modal -->
     <script>
         // In-memory user database (simulate backend)

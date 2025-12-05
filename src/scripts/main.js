@@ -1,15 +1,9 @@
-window.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById("gameCanvas");
-
-    if (!canvas) {
-        console.error("Canvas tidak ditemukan!");
-        return;
-    }
-
-    // Pastikan startGame() ada
-    if (window.startGame) {
-        window.startGame();
-    } else {
-        console.error("startGame() tidak ditemukan! Pastikan game.js dimuat dulu.");
-    }
-});
+function setupCounter(element) {
+  let counter = 0
+  const setCounter = (count) => {
+    counter = count
+    element.innerHTML = `count is ${counter}`
+  }
+  element.addEventListener('click', () => setCounter(counter + 1))
+  setCounter(0)
+}
