@@ -18,21 +18,25 @@
   "description": "Game interaktif berbasis web yang menceritakan kisah seorang anak SD yang berimajinasi menjadi superhero dan menyelamatkan kucing di perjalanan ke sekolah.",
   "main": "server.js",
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.17",
     "ansis": "^4.2.0",
+    "bcryptjs": "^3.0.3",
     "detect-libc": "^2.1.2",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "fdir": "^6.5.0",
+    "jsonwebtoken": "^9.0.3",
     "lightningcss": "^1.30.2",
     "lightningcss-win32-x64-msvc": "^1.30.2",
     "nanoid": "^3.3.11",
+    "pg": "^8.16.3",
     "picocolors": "^1.1.1",
     "picomatch": "^4.0.3",
     "postcss": "^8.5.6",
     "rolldown": "^1.0.0-beta.41",
     "source-map-js": "^1.2.1",
-    "tinyglobby": "^0.2.15",
-    "@tailwindcss/vite": "^4.1.17",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "tinyglobby": "^0.2.15"
   },
   "repository": {
     "type": "git",

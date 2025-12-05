@@ -21,12 +21,17 @@
                         'retro-green-light': '#A7B65D',
                         'retro-green-btn': '#83B268',
                         'retro-green-btn-hover': '#6fa155',
+                        'retro-blue': '#4A90E2',
+                        'retro-blue-hover': '#357ABD',
+                        'error-red': '#e53e3e',
+                        'success-green': '#38a169',
                     },
                     animation: {
-                        'fade-in': 'fadeIn 1s ease-in-out',
-                        'slide-up': 'slideUp 1.2s ease-out',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
                         'bounce-slow': 'bounce 2s infinite',
                         'float': 'float 3s ease-in-out infinite',
+                        'shake': 'shake 0.5s ease-in-out',
                     },
                     keyframes: {
                         fadeIn: {
@@ -40,19 +45,49 @@
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '25%': { transform: 'translateX(-5px)' },
+                            '75%': { transform: 'translateX(5px)' },
                         }
                     }
                 }
             }
         }
     </script>
+    <style>
+        .error-message {
+            color: #e53e3e;
+            font-size: 10px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .input-error {
+            border-color: #e53e3e !important;
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .success-message {
+            color: #38a169;
+            font-size: 10px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .profile-tab {
+            color: #83B268;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body class="font-press-start bg-retro-green">
     <header>
-        <nav>
+        <nav class="sticky top-0 z-50">
             <div class="wrapper">
                 <div class="logo">
-                    <a href="#" class="transition-all duration-300 hover:scale-105">HERYLL</a>
+                    <a href="../../index.html" class="transition-all duration-300 hover:scale-105">HERYLL</a>
                 </div>
                 <div class="menu">
                     <ul>
@@ -60,6 +95,7 @@
                         <li><a href="../tutorial/tutorial.html" class="transition-all duration-300 hover:text-retro-green-btn">TUTORIAL</a></li>
                         <li><a href="../features/FeaturesPage.html" class="transition-all duration-300 hover:text-retro-green-btn">FEATURES</a></li>
                         <li><a href="../about/about.html" class="active transition-all duration-300">ABOUT</a></li>
+                        <li><a href="#" id="loginTab" class="transition-all duration-300 hover:text-retro-blue transform hover:scale-105">LOGIN</a></li>
                         <li><a href="../play/play.html" class="btn-play transition-all duration-300 hover:scale-105">PLAY</a></li>
                     </ul>
                 </div>
@@ -67,9 +103,71 @@
         </nav>
     </header>
 
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">LOGIN</button>
+                <button class="auth-tab" data-tab="signup">SIGN UP</button> <!-- Diubah dari SIGN IN ke SIGN UP -->
+            </div>
+            
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form">
+                <h2 class="text-center text-lg mb-6">WELCOME BACK!</h2>
+                <div class="form-group">
+                    <label for="loginEmail">EMAIL / USERNAME</label>
+                    <input type="text" id="loginEmail" placeholder="Enter email or username">
+                    <div id="loginEmailError" class="error-message">Please enter valid email or username</div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">PASSWORD</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password">
+                    <div id="loginPasswordError" class="error-message">Please enter password</div>
+                    <div id="loginAccountError" class="error-message" style="color: #e53e3e;">Account not found. Please sign up first!</div>
+                </div>
+                <button class="auth-btn" id="submitLogin">LOGIN</button>
+                <div class="switch-auth">
+                    Don't have an account? <span id="switchToSignup">Sign Up</span> <!-- Diubah -->
+                </div>
+            </div>
+            
+            <!-- Sign Up Form -->
+            <div id="signupForm" class="auth-form" style="display: none;">
+                <h2 class="text-center text-lg mb-6">CREATE ACCOUNT</h2>
+                <div class="form-group">
+                    <label for="signupUsername">USERNAME</label>
+                    <input type="text" id="signupUsername" placeholder="Choose username (min. 3 chars)">
+                    <div id="usernameError" class="error-message">Username must be at least 3 characters</div>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">EMAIL</label>
+                    <input type="email" id="signupEmail" placeholder="Enter valid email (example@domain.com)">
+                    <div id="emailError" class="error-message">Please enter a valid email address with @ symbol</div>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">PASSWORD</label>
+                    <input type="password" id="signupPassword" placeholder="Create password (min. 6 chars)">
+                    <div id="passwordError" class="error-message">Password must be at least 6 characters</div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">CONFIRM PASSWORD</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm password">
+                    <div id="confirmPasswordError" class="error-message">Passwords do not match</div>
+                </div>
+                <button class="auth-btn" id="submitSignup">CREATE ACCOUNT</button>
+                <div id="signupSuccess" class="success-message">Account created successfully! You can now login.</div>
+                <div class="switch-auth">
+                    Already have an account? <span id="switchToLogin">Login</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="hero">
         <h1 class="hero-title animate-slide-up">ABOUT</h1>
-        <p class="hero-sub animate-slide-up">The game and character</p>
+        <p class="hero-sub animate-slide-up delay-300">The game and character</p>
         <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
             <i class="fas fa-chevron-down text-white text-2xl"></i>
         </div>
@@ -77,26 +175,302 @@
 
     <section class="main">
         <h2 class="main-title animate-fade-in">Get to know about the character!</h2>
-        <div class="white-box transition-all duration-500 hover:scale-105">
-            <img src="Mc buka mata buka mulut (1).png" class="abt animate-float">
+        <div class="white-box animate-fade-in">
+            <div class="about-content">
+                <div class="character-image-container">
+                    <img src="Mc buka mata buka mulut (1).png" alt="HERYLL Character" class="character-image animate-float">
+                </div>
+                <div class="about-text animate-slide-up delay-100">
+                    <strong>She's just a kid who wants to be a hero on her own</strong>
+                    A kind little girl who loves cats and wants to save all of them with her own strength. 
+                    With determination and courage, she embarks on a journey to rescue every stray cat she finds.
+                    Her heart is as big as her dreams, and nothing will stop her from becoming the hero she believes she can be!
+                </div>
+            </div>
         </div>
-        <p class="feature-description animate-fade-in">
-            <strong>She just a kid who wanna be hero on her own </strong> A kind little girl who loves cats and wanna save all of them with her own strength :3
+        <p class="about-description animate-fade-in delay-300">
+            <strong>Character Traits:</strong> Brave, Kind-hearted, Determined, Cat Lover, Aspiring Hero
         </p>
     </section>
 
-    <footer class="footer">
-        <h3 class="contact-title animate-fade-in">CONTACTS</h3>
+    <footer class="footer animate-fade-in delay-500">
+        <h3 class="contact-title">CONTACTS</h3>
         <div class="icons">
-            <i class="fa-brands fa-instagram transition-all duration-300 hover:scale-125 hover:text-pink-500"></i>
-            <i class="fa-brands fa-twitter transition-all duration-300 hover:scale-125 hover:text-blue-400"></i>
-            <i class="fa-brands fa-tiktok transition-all duration-300 hover:scale-125 hover:text-black"></i>
-            <i class="fa-brands fa-facebook transition-all duration-300 hover:scale-125 hover:text-blue-600"></i>
+            <i class="fa-brands fa-instagram hover:text-pink-500"></i>
+            <i class="fa-brands fa-twitter hover:text-blue-400"></i>
+            <i class="fa-brands fa-tiktok hover:text-black"></i>
+            <i class="fa-brands fa-facebook hover:text-blue-600"></i>
         </div>
-        <p class="footer-small animate-fade-in">
+        <p class="footer-small">
             For business or support, our team is ready to help you anytime.
         </p>
-        <p class="copy animate-fade-in">Copyright © 2025. HERYLL Team.</p>
+        <p class="copy">Copyright © 2025. HERYLL Team.</p>
     </footer>
+
+    <script>
+        // Simpan data akun di localStorage
+        const ACCOUNTS_KEY = 'heryll_accounts';
+        const LOGGED_IN_KEY = 'heryll_loggedIn';
+        const USERNAME_KEY = 'heryll_username';
+        
+        // Initialize accounts if not exists
+        if (!localStorage.getItem(ACCOUNTS_KEY)) {
+            localStorage.setItem(ACCOUNTS_KEY, JSON.stringify([]));
+        }
+        
+        // Auth Modal Functionality
+        const authModal = document.getElementById('authModal');
+        const loginTab = document.getElementById('loginTab');
+        const closeModal = document.getElementById('closeModal');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const submitLogin = document.getElementById('submitLogin');
+        const submitSignup = document.getElementById('submitSignup');
+
+        // Helper functions
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            document.getElementById(elementId.replace('Error', '')).classList.add('input-error');
+        }
+
+        function hideError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.style.display = 'none';
+            const inputId = elementId.replace('Error', '');
+            const inputElement = document.getElementById(inputId);
+            if (inputElement) {
+                inputElement.classList.remove('input-error');
+            }
+        }
+
+        function showSuccess(elementId, message) {
+            const successElement = document.getElementById(elementId);
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            setTimeout(() => {
+                successElement.style.display = 'none';
+            }, 3000);
+        }
+
+        function validateEmail(email) {
+            return email.includes('@') && email.includes('.') && email.length > 5;
+        }
+
+        function findAccount(emailOrUsername, password) {
+            const accounts = JSON.parse(localStorage.getItem(ACCOUNTS_KEY) || '[]');
+            return accounts.find(acc => 
+                (acc.email === emailOrUsername || acc.username === emailOrUsername) && 
+                acc.password === password
+            );
+        }
+
+        function accountExists(email, username) {
+            const accounts = JSON.parse(localStorage.getItem(ACCOUNTS_KEY) || '[]');
+            return accounts.some(acc => acc.email === email || acc.username === username);
+        }
+
+        // Open modal when login tab is clicked
+        loginTab.addEventListener('click', (e) => {
+            e.preventDefault();
+            authModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            authModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Switch between login and signup tabs
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                authTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabType = tab.getAttribute('data-tab');
+                if (tabType === 'login') {
+                    loginForm.style.display = 'block';
+                    signupForm.style.display = 'none';
+                    // Reset errors
+                    hideError('loginEmailError');
+                    hideError('loginPasswordError');
+                    hideError('loginAccountError');
+                } else {
+                    loginForm.style.display = 'none';
+                    signupForm.style.display = 'block';
+                    // Reset errors
+                    hideError('usernameError');
+                    hideError('emailError');
+                    hideError('passwordError');
+                    hideError('confirmPasswordError');
+                }
+            });
+        });
+
+        // Switch to signup from login form link
+        switchToSignup.addEventListener('click', () => {
+            authTabs.forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-tab="signup"]').classList.add('active');
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+        });
+
+        // Switch to login from signup form link
+        switchToLogin.addEventListener('click', () => {
+            authTabs.forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-tab="login"]').classList.add('active');
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        // Login form submission
+        submitLogin.addEventListener('click', () => {
+            const emailOrUsername = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            // Reset errors
+            hideError('loginEmailError');
+            hideError('loginPasswordError');
+            hideError('loginAccountError');
+            
+            let hasError = false;
+            
+            // Validation
+            if (!emailOrUsername) {
+                showError('loginEmailError', 'Please enter email or username');
+                hasError = true;
+            }
+            
+            if (!password) {
+                showError('loginPasswordError', 'Please enter password');
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // Check if account exists
+            const account = findAccount(emailOrUsername, password);
+            
+            if (!account) {
+                showError('loginAccountError', 'Account not found. Please sign up first!');
+                return;
+            }
+            
+            // Login successful
+            localStorage.setItem(LOGGED_IN_KEY, 'true');
+            localStorage.setItem(USERNAME_KEY, account.username);
+            
+            alert(`Login successful! Welcome ${account.username}`);
+            authModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${account.username.toUpperCase()}`;
+            loginTab.classList.add('profile-tab');
+        });
+
+        // Signup form submission
+        submitSignup.addEventListener('click', () => {
+            const username = document.getElementById('signupUsername').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Reset errors
+            hideError('usernameError');
+            hideError('emailError');
+            hideError('passwordError');
+            hideError('confirmPasswordError');
+            
+            let hasError = false;
+            
+            // Validation
+            if (username.length < 3) {
+                showError('usernameError', 'Username must be at least 3 characters');
+                hasError = true;
+            }
+            
+            if (!validateEmail(email)) {
+                showError('emailError', 'Please enter a valid email address with @ symbol');
+                hasError = true;
+            }
+            
+            if (password.length < 6) {
+                showError('passwordError', 'Password must be at least 6 characters');
+                hasError = true;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('confirmPasswordError', 'Passwords do not match');
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // Check if account already exists
+            if (accountExists(email, username)) {
+                showError('emailError', 'Account with this email or username already exists');
+                return;
+            }
+            
+            // Save new account
+            const accounts = JSON.parse(localStorage.getItem(ACCOUNTS_KEY) || '[]');
+            accounts.push({
+                username,
+                email,
+                password,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+            
+            // Show success message
+            showSuccess('signupSuccess', 'Account created successfully! You can now login.');
+            
+            // Clear form
+            document.getElementById('signupUsername').value = '';
+            document.getElementById('signupEmail').value = '';
+            document.getElementById('signupPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            
+            // Auto switch to login after 2 seconds
+            setTimeout(() => {
+                authTabs.forEach(t => t.classList.remove('active'));
+                document.querySelector('[data-tab="login"]').classList.add('active');
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            }, 2000);
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && authModal.style.display === 'block') {
+                authModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Check if user is logged in from localStorage
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem(LOGGED_IN_KEY);
+            const username = localStorage.getItem(USERNAME_KEY);
+            
+            if (isLoggedIn === 'true' && username) {
+                loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
+                loginTab.classList.add('profile-tab');
+            }
+        });
+    </script>
 </body>
 </html>
