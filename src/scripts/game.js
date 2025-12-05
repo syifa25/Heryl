@@ -1,21 +1,19 @@
 (() => {
 
-const canvas = document.querySelector('canvas');
-const c = canvas.getContext('2d')
+const canvas = document.getElementById("gameCanvas");
+const c = canvas.getContext("2d");
 
-canvas.width = 1024
-canvas.height = 576
+canvas.width = 1024;
+canvas.height = 576;
 
-const collisionsMap = []
+// ----- Map collision -----
+const collisionsMap = [];
 for (let i = 0; i < collisions.length; i += 70) {
     collisionsMap.push(collisions.slice(i, 70 + i));
 }
 
-const boundaries = []
-const offset = {
-    x: -88,
-    y: -280
-}
+const boundaries = [];
+const offset = { x: -88, y: -280 };
 
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
@@ -27,189 +25,119 @@ collisionsMap.forEach((row, i) => {
                         y: i * Boundary.height + offset.y
                     }
                 })
-            )
-    })
-})
+            );
+    });
+});
 
-console.log(boundaries);
+// ----- Images -----
+const backgroundImage = new Image();
+backgroundImage.src = "../img/untitled.png";
 
+const foregroundImage = new Image();
+foregroundImage.src = "../img/foregroundObjek.png";
 
-const image = new Image()
-image.src = '../img/untitled.png'
+const playerImage = new Image();
+playerImage.src = "../img/yn_depan.png"; // hanya 1 gambar statis
 
-const foregroundImage = new Image()
-foregroundImage.src = '../img/foregroundObjek.png'
+// ----- Sprites -----
+const background = new Sprite({ position: { x: offset.x, y: offset.y }, image: backgroundImage });
+const foreground = new Sprite({ position: { x: offset.x, y: offset.y }, image: foregroundImage });
+const player = new Sprite({ position: { x: canvas.width/2 - 16/2, y: canvas.height/2 - 16/2 }, image: playerImage, scale: 2 });
 
-const playerImage = new Image()
-playerImage.src = '../img/yn.png'
-
-
-const player = new Sprite({
-    position: {
-        x: canvas.width / 2 - 192 / 4 / 2,
-        y: canvas.height / 2 - 68 / 2
-    },
-    image: playerImage,
-    frames: {
-        max: 4
-    }
-})
-
-const background = new Sprite({
-    position: {
-        x: offset.x,
-        y: offset.y
-    },
-    image: image
-})
-
-const foreground = new Sprite({
-    position: {
-        x: offset.x,
-        y: offset.y
-    },
-    image: foregroundImage
-})
-
-
+// ----- Keys & Movement -----
 const keys = {
     w: { pressed: false },
     a: { pressed: false },
     s: { pressed: false },
     d: { pressed: false }
-}
+};
 
-const movables = [background, ...boundaries]
+const movables = [background, ...boundaries, foreground];
 
+window.addEventListener("keydown", e => {
+    if (keys[e.key] !== undefined) keys[e.key].pressed = true;
+});
 
+window.addEventListener("keyup", e => {
+    if (keys[e.key] !== undefined) keys[e.key].pressed = false;
+});
+
+// ----- Collision -----
 function rectangularCollision({ rectangle1, rectangle2 }) {
     return (
         rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
         rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
         rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
         rectangle1.position.y + rectangle1.height >= rectangle2.position.y
-    )
+    );
 }
 
-let lastKey = ''
-
+// ----- Animate -----
 function animate() {
-    window.requestAnimationFrame(animate)
-    background.draw()
-    boundaries.forEach(boundary => boundary.draw())
-    player.draw()
-    foreground.draw()
+    requestAnimationFrame(animate);
 
-    let moving = true
-    player.moving = false
+    background.draw();
+    boundaries.forEach(boundary => boundary.draw());
+    player.draw();
+    foreground.draw();
 
-    if (keys.w.pressed && lastKey === 'w') {
-        player.moving = true
+    let moving = true;
+
+    if (keys.w.pressed) {
         for (let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i]
-            if (rectangularCollision({
-                rectangle1: player,
-                rectangle2: {
-                    ...boundary,
-                    position: {
-                        x: boundary.position.x,
-                        y: boundary.position.y + 3
-                    }
-                }
-            })) {
-                moving = false
-                break
+            const boundary = boundaries[i];
+            if (rectangularCollision({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y + 4 } } })) {
+                moving = false;
+                break;
             }
         }
-        if (moving) movables.forEach(m => m.position.y += 3)
+        if (moving) movables.forEach(m => m.position.y += 4);
     }
 
-    else if (keys.a.pressed && lastKey === 'a') {
-        player.moving = true
+    if (keys.s.pressed) {
         for (let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i]
-            if (rectangularCollision({
-                rectangle1: player,
-                rectangle2: {
-                    ...boundary,
-                    position: {
-                        x: boundary.position.x + 3,
-                        y: boundary.position.y
-                    }
-                }
-            })) {
-                moving = false
-                break
+            const boundary = boundaries[i];
+            if (rectangularCollision({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y - 4 } } })) {
+                moving = false;
+                break;
             }
         }
-        if (moving) movables.forEach(m => m.position.x += 3)
+        if (moving) movables.forEach(m => m.position.y -= 4);
     }
 
-    else if (keys.s.pressed && lastKey === 's') {
-        player.moving = true
+    if (keys.a.pressed) {
         for (let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i]
-            if (rectangularCollision({
-                rectangle1: player,
-                rectangle2: {
-                    ...boundary,
-                    position: {
-                        x: boundary.position.x,
-                        y: boundary.position.y - 3
-                    }
-                }
-            })) {
-                moving = false
-                break
+            const boundary = boundaries[i];
+            if (rectangularCollision({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x + 4, y: boundary.position.y } } })) {
+                moving = false;
+                break;
             }
         }
-        if (moving) movables.forEach(m => m.position.y -= 3)
+        if (moving) movables.forEach(m => m.position.x += 4);
     }
 
-    else if (keys.d.pressed && lastKey === 'd') {
-        player.moving = true
+    if (keys.d.pressed) {
         for (let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i]
-            if (rectangularCollision({
-                rectangle1: player,
-                rectangle2: {
-                    ...boundary,
-                    position: {
-                        x: boundary.position.x - 3,
-                        y: boundary.position.y
-                    }
-                }
-            })) {
-                moving = false
-                break
+            const boundary = boundaries[i];
+            if (rectangularCollision({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x - 4, y: boundary.position.y } } })) {
+                moving = false;
+                break;
             }
         }
-        if (moving) movables.forEach(m => m.position.x -= 3)
+        if (moving) movables.forEach(m => m.position.x -= 4);
     }
 }
 
+// ----- Start Game -----
 function startGame() {
-    animate()
+    animate();
 }
 
-window.startGame = startGame
+// mulai game setelah playerImage load
+playerImage.onload = () => {
+    startGame();
+};
 
-window.addEventListener('keydown', e => {
-    switch (e.key) {
-        case 'w': keys.w.pressed = true; lastKey = 'w'; break
-        case 'a': keys.a.pressed = true; lastKey = 'a'; break
-        case 's': keys.s.pressed = true; lastKey = 's'; break
-        case 'd': keys.d.pressed = true; lastKey = 'd'; break
-    }
-})
+window.startGame = startGame;
 
-window.addEventListener('keyup', e => {
-    switch (e.key) {
-        case 'w': keys.w.pressed = false; break
-        case 'a': keys.a.pressed = false; break
-        case 's': keys.s.pressed = false; break
-        case 'd': keys.d.pressed = false; break
-    }
-})
-
-})(); // <- PENUTUP IIFE
+})(); // <- IIFE ditutup
