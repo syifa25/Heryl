@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'press-start': ['"Press Start 2P"', 'monospace'],
+                    },
+                    colors: {
+                        'retro-green': '#a8bf53',
+                        'retro-green-dark': '#8ca443',
+                        'retro-green-light': '#A7B65D',
+                        'retro-green-btn': '#83B268',
+                        'retro-green-btn-hover': '#6fa155',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 1s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'typewriter': 'typewriter 2s steps(20) forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        typewriter: {
+                            'from': { width: '0' },
+                            'to': { width: '100%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="tutorial.css">
+</head>
+<body class="font-press-start bg-retro-green">
+    <header>
+        <nav class="sticky top-0 z-50 bg-retro-green-light transition-all duration-300 hover:shadow-lg">
+            <div class="wrapper">
+                <div class="logo animate-pulse-slow">
+                    <a href="#" class="transition-all duration-300 hover:scale-105">HERYLL</a>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="../../index.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">HOME</a></li>
+                        <li><a href="../tutorial/tutorial.html" class="active transition-all duration-300 transform hover:scale-105">TUTORIAL</a></li>
+                        <li><a href="../features/FeaturesPage.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">FEATURES</a></li>
+                        <li><a href="../about/about.html" class="transition-all duration-300 hover:text-retro-green-btn transform hover:scale-105">ABOUT</a></li>
+                        <li><a href="../play/play.html" class="btn-play transition-all duration-300 transform hover:scale-110">PLAY</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero animate-fade-in">
+        <h1 class="hero-title animate-slide-up">TUTORIAL</h1>
+        <p class="hero-sub animate-slide-up delay-300">How to play?</p>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+            <i class="fas fa-chevron-down text-white text-2xl"></i>
+        </div>
+    </section>
+
+    <section class="main">
+        <h2 class="main-title animate-pulse-slow">Save the cats!</h2>
+        <div class="white-box transition-all duration-500 hover:scale-105 hover:shadow-xl animate-float">
+            <!-- nanti diisi screenshot game -->
+            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg">
+                <div class="text-center animate-pulse">
+                    <i class="fas fa-gamepad text-6xl text-gray-400 mb-4"></i>
+                    <p class="text-gray-500 text-sm">Game Screenshot Area</p>
+                </div>
+            </div>
+        </div>
+        <p class="feature-description animate-fade-in delay-500">
+            Your mother tells you about superheroes. After that, you wanna become one of those too... save cats = save the world.
+        </p>
+        
+        <!-- Tambahan section tutorial steps dengan animasi -->
+        <div class="tutorial-steps mt-12 max-w-4xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-100">
+                    <div class="text-4xl text-retro-green-btn mb-4 animate-bounce-slow">1</div>
+                    <h3 class="text-sm mb-3">START THE GAME</h3>
+                    <p class="text-xs text-gray-600">Click the PLAY button and begin your adventure</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-300">
+                    <div class="text-4xl text-retro-green-btn mb-4 animate-bounce-slow">2</div>
+                    <h3 class="text-sm mb-3">FIND THE CATS</h3>
+                    <p class="text-xs text-gray-600">Explore different levels to locate stranded cats</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-500">
+                    <div class="text-4xl text-retro-green-btn mb-4 animate-bounce-slow">3</div>
+                    <h3 class="text-sm mb-3">RESCUE & WIN</h3>
+                    <p class="text-xs text-gray-600">Save all cats to complete each level and progress</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer transition-all duration-500 hover:bg-retro-green-dark">
+        <h3 class="contact-title animate-fade-in">CONTACTS</h3>
+        <div class="icons">
+            <i class="fa-brands fa-instagram transition-all duration-300 transform hover:scale-125 hover:text-pink-500 cursor-pointer"></i>
+            <i class="fa-brands fa-twitter transition-all duration-300 transform hover:scale-125 hover:text-blue-400 cursor-pointer"></i>
+            <i class="fa-brands fa-tiktok transition-all duration-300 transform hover:scale-125 hover:text-black cursor-pointer"></i>
+            <i class="fa-brands fa-facebook transition-all duration-300 transform hover:scale-125 hover:text-blue-600 cursor-pointer"></i>
+        </div>
+        <p class="footer-small animate-fade-in delay-300">
+            For business or support, our team is ready to help you anytime.
+        </p>
+        <p class="copy animate-fade-in delay-500">Copyright © 2025. HERYLL Team.</p>
+    </footer>
+</body>
+</html>
