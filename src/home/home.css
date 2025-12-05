@@ -216,13 +216,20 @@ nav ul li a:not(.active):hover {
     opacity: 0.5;
 }
 
-/* Animasi delay tambahan untuk Tailwind */
+
 .delay-100 {
     animation-delay: 100ms;
 }
 
 .delay-300 {
     animation-delay: 300ms;
+
+.footer {
+    margin-top: 60px;
+    padding: 40px 0;
+    background-color: #8ca443;
+    color: black;
+
 }
 
 .delay-500 {
