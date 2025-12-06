@@ -156,6 +156,18 @@ window.addEventListener("keydown", e => {
 window.addEventListener("keyup", e => {
     if (keys[e.key] !== undefined) keys[e.key].pressed = false;
 });
+window.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'e' && nearCatIndex !== -1) {
+        // hapus kucing dari array
+        cats.splice(nearCatIndex, 1);
+        nearCatIndex = -1;
+
+        // update gameState
+        addCatSaved(); // memanggil fungsi dari HTML
+
+        document.getElementById("prompt").innerText = "";
+    }
+});
 
 // ---------------------------------------------------------------------
 // COLLISION FUNCTIONS
@@ -181,6 +193,21 @@ function isTouching(a, b) {
 // ---------------------------------------------------------------------
 // ANIMATE
 // ---------------------------------------------------------------------
+// ambil modal di awal
+const winModal = document.getElementById("winModal");
+const closeWinModalBtn = document.getElementById("closeWinModal");
+
+// event listener tombol modal (cukup sekali)
+closeWinModalBtn.addEventListener("click", () => {
+    winModal.classList.add("hidden");
+    window.location.reload(); // atau reset game
+});
+
+// ---------------------------------------------------------------------
+// ANIMATE
+// ---------------------------------------------------------------------
+let gameWon = false; // flag supaya modal tidak muncul berulang
+
 function animate() {
     requestAnimationFrame(animate);
 
@@ -257,11 +284,34 @@ function animate() {
         }
         if (moving) movables.forEach(m => m.position.x -= 4);
     }
+
+    // cek apakah semua kucing sudah diselamatkan
+    if (cats.length === 0 && !gameWon) {
+        gameWon = true; // set supaya modal cuma muncul sekali
+        winModal.classList.remove("hidden"); // tampilkan modal
+    }
+}
+
 }
 playerImage.onload = () => {
     player.width = playerImage.width * player.scale;
     player.height = playerImage.height * player.scale;
     animate();
 };
+function addCatSaved() {
+    gameState.catsSaved++;
+    if (gameState.catsSaved % 5 === 0) { // tiap 5 kucing → level up
+        levelUp();
+        alert("Level Up! Sekarang level: " + gameState.level);
+    }
+    updateStatsUI();
+    saveProgressToDB();
+}
+
+function levelUp() {
+    gameState.level++;
+    updateStatsUI();
+    saveProgressToDB();
+}
 
 })();
