@@ -291,7 +291,6 @@ function animate() {
         winModal.classList.remove("hidden"); // tampilkan modal
     }
 }
-
 }
 playerImage.onload = () => {
     player.width = playerImage.width * player.scale;
