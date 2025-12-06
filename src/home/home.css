@@ -223,7 +223,7 @@ nav ul li a:not(.active):hover {
 
 .delay-300 {
     animation-delay: 300ms;
-
+}
 .footer {
     margin-top: 60px;
     padding: 40px 0;
