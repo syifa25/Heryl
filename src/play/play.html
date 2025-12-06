@@ -179,7 +179,7 @@
                     font-weight: bold;
                     text-shadow: 2px 2px 5px black;
                 "></div>
-
+        
                 <!-- Game Canvas -->
                 <canvas id= "gameCanvas" class="animate-fade-in delay-500"></canvas>
 
@@ -674,6 +674,148 @@
         saveProgressToDB();
     }
     </script>
+    <script>
+        const API_BASE = "http://localhost:5000"; 
+
+        // HELPER: Simpan token + user ke localStorage
+        function saveAuth(token, username, email) {
+            localStorage.setItem("heryll_token", token);
+            localStorage.setItem("heryll_loggedIn", "true");
+            localStorage.setItem("heryll_username", username);
+            localStorage.setItem("heryll_email", email);
+        }
+
+        // LOGIN (backend)
+        submitLogin.addEventListener("click", async () => {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
+
+            if (!email || !password) {
+                showError("loginError", "Please fill in all fields!");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/auth/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showError("loginError", data.message || "Login failed!");
+                    return;
+                }
+
+                // simpan token JWT & user 
+                saveAuth(data.token, data.user.username, data.user.email);
+
+                // update UI
+                loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${data.user.username.toUpperCase()}`;
+                authModal.style.display = "none";
+
+                document.getElementById("login-required").style.display = "none";
+                document.getElementById("loading-screen").style.display = "flex";
+
+                setTimeout(() => {
+                    document.getElementById("loading-screen").style.display = "none";
+                }, 2000);
+
+            } catch (err) {
+                showError("loginError", "Server error!");
+            }
+        });
+
+        // SIGNUP (backend)
+        submitSignup.addEventListener("click", async () => {
+            const username = signupUsername.value.trim();
+            const email = signupEmail.value.trim();
+            const password = signupPassword.value.trim();
+            const confirm = confirmPassword.value.trim();
+
+            if (!username || !email || !password || !confirm) {
+                showError("signupError", "Fill all fields");
+                return;
+            }
+
+            if (password !== confirm) {
+                showError("signupError", "Passwords do not match!");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/auth/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showError("signupError", data.message || "Signup failed!");
+                    return;
+                }
+
+                hideError("signupError");
+                showSuccess("signupSuccess", "Account created! You can login now");
+
+            } catch (err) {
+                showError("signupError", "Server error!");
+            }
+        });
+
+        // SAVE GAME PROGRESS TO BACKEND
+        async function saveProgress(level, catsSaved, timePlayed) {
+            const token = localStorage.getItem("heryll_token");
+            if (!token) return;
+
+            await fetch(`${API_BASE}/game/save`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ 
+                    level, 
+                    catsSaved, 
+                    timePlayed 
+                })
+            });
+        }
+
+        // LOAD GAME PROGRESS
+        // Dipanggil saat page load jika login
+        async function loadProgress() {
+            const token = localStorage.getItem("heryll_token");
+            if (!token) return;
+
+            const res = await fetch(`${API_BASE}/game/progress`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                // tampilkan progress di UI
+                document.getElementById("catsSaved").textContent = data.catsSaved;
+                document.getElementById("currentLevel").textContent = data.level;
+                document.getElementById("timePlayed").textContent = data.timePlayed;
+            }
+        }
+
+        // Auto load jika login 
+        window.addEventListener("load", loadProgress);
+
+        // EXPORT ke game.js (supaya game.js bisa memanggil)
+        // Contoh: saveProgress(currentLevel, catsSaved, time)
+        window.saveProgress = saveProgress;
+
+        </script>
+
 
 </body>
 </html>

@@ -1,42 +1,71 @@
-import db from '../config/db.js';
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+const pool = require('../config/db');
+const { hashPassword, verifyPassword } = require('../utils/password');
+const { signToken } = require('../utils/jwt');
 
+// REGISTER
+exports.register = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
-export const register = async (req, res) => {
-    try {
-        const { username, email, password } = req.body;
-        const hashed = await bcrypt.hash(password, 10);
+    if (!name || !email || !password)
+      return res.status(400).json({ message: "All fields are required" });
 
-        await pool.query(
-            "INSERT INTO players (username, email, password) VALUES ($1, $2, $3)",
-            [username, email, hashed]
-        );
+    const hashed = await hashPassword(password);
 
-        res.json({ message: "User registered!" });
-    } catch (err) {
-        res.status(400).json({ error: err.message });
-    }
+    const q = `
+      INSERT INTO users (name, email, password)
+      VALUES ($1, $2, $3)
+      RETURNING id, name, email, created_at
+    `;
+
+    const r = await pool.query(q, [name, email, hashed]);
+    const user = r.rows[0];
+
+    const token = signToken({ id: user.id, email: user.email });
+
+    res.status(201).json({
+      message: "User registered",
+      user,
+      token
+    });
+
+  } catch (err) {
+    console.error(err);
+
+    if (err.code === "23505")
+      return res.status(409).json({ message: "Email already exists" });
+
+    res.status(500).json({ message: "Server Error" });
+  }
 };
 
-export const login = async (req, res) => {
-    try {
-        const { username, password } = req.body;
+// LOGIN
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-        const result = await pool.query(
-            "SELECT * FROM players WHERE username = $1",
-            [username]
-        );
+    const q = "SELECT * FROM users WHERE email=$1";
+    const r = await pool.query(q, [email]);
 
-        const user = result.rows[0];
-        if (!user) return res.status(404).json({ error: "User not found!" });
+    if (r.rows.length === 0)
+      return res.status(404).json({ message: "User not found" });
 
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) return res.status(400).json({ error: "Wrong password!" });
+    const user = r.rows[0];
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-        res.json({ message: "Login success", token });
-    } catch (err) {
-        res.status(400).json({ error: err.message });
-    }
+    const valid = await verifyPassword(password, user.password);
+    if (!valid)
+      return res.status(401).json({ message: "Wrong password" });
+
+    const token = signToken({ id: user.id, email: user.email });
+
+    res.json({
+      message: "Login success",
+      user,
+      token
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
 };
