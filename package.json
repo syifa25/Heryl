@@ -7,35 +7,26 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "node server.js"
+    "start": "cd server && node src/index.js"
   },
   "devDependencies": {
-    "vite": "npm:rolldown-vite@7.1.14",
-    "bcrypt": "^6.0.0",
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.6.1",
-    "express": "^4.22.1",
-    "jsonwebtoken": "^9.0.3",
-    "pg": "^8.16.3"
-  },
-  "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"
   },
-  "description": "Game interaktif berbasis web yang menceritakan kisah seorang anak SD yang berimajinasi menjadi superhero dan menyelamatkan kucing di perjalanan ke sekolah.",
-  "main": "server.js",
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "ansis": "^4.2.0",
+
     "bcryptjs": "^3.0.3",
-    "detect-libc": "^2.1.2",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "fdir": "^6.5.0",
     "jsonwebtoken": "^9.0.3",
+    "pg": "^8.16.3",
+
+    "detect-libc": "^2.1.2",
+    "fdir": "^6.5.0",
     "lightningcss": "^1.30.2",
     "nanoid": "^3.3.11",
-    "pg": "^8.16.3",
     "picocolors": "^1.1.1",
     "picomatch": "^4.0.3",
     "postcss": "^8.5.6",
@@ -44,6 +35,11 @@
     "tailwindcss": "^4.1.17",
     "tinyglobby": "^0.2.15"
   },
+  "overrides": {
+    "vite": "npm:rolldown-vite@7.1.14"
+  },
+  "description": "Game interaktif berbasis web yang menceritakan kisah seorang anak SD yang berimajinasi menjadi superhero dan menyelamatkan kucing di perjalanan ke sekolah.",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/syifa25/Heryl.git"
