@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const authRoutes = require("./authRoutes");
-const gameRoutes = require("./routes/gameRoutes");
-const progressRoutes = require("./routes/progressRoutes");
+const authRoutes = require("./src/routes/authRoutes")
+const gameRoutes = require("./src/routes/gameRoutes");
+const progressRoutes = require("./src/routes/progressRoutes");
 
 const app = express();
 const PORT = 5000;

@@ -8,6 +8,16 @@
 
   canvas.width = 1024;
   canvas.height = 576;
+  // --------------------------------------------
+  // EVENT TOMBOL SELESAI POP-UP
+  // --------------------------------------------
+  closeWinModal.addEventListener("click", () => {
+      winModal.classList.add("hidden");   // pop up hilang
+      resetCats();                        // reset semua kucing
+      gameState.time_played = 0;               // waktu balik 3 menit
+      startTimer();                       // mulai lagi
+      currentLevel = 1;                   // balik ke level 1
+  });
 
   // -------------------------------------------------------------
   // KELAS SPRITE & BOUNDARY
@@ -97,33 +107,47 @@
   // -------------------------------------------------------------
   // KUCING
   // -------------------------------------------------------------
-  const kucingMap = [];
-  for (let i = 0; i < kucingData.length; i += 70) {
-    kucingMap.push(kucingData.slice(i, i + 70));
-  }
+    const kucingMap = [];
+    for (let i = 0; i < kucingData.length; i += 70) {
+      kucingMap.push(kucingData.slice(i, i + 70));
+    }
 
-  const cats = [];
-  const tileSize = 48;
+    const tileSize = 48;
+    const cats = [];
 
-  kucingMap.forEach((row, y) => {
-    row.forEach((value, x) => {
-      if (value >= 184 && value <= 193) {
-        const img = new Image();
-        img.src = `../img/cat${value - 183}.png`;
+    // ====== SPAWN KUCING ======
+    kucingMap.forEach((row, y) => {
+      row.forEach((value, x) => {
+        // tile 184–193 = 10 jenis kucing
+        if (value >= 184 && value <= 193) {
+          const img = new Image();
+          img.src = `../img/cat${value - 183}.png`;
 
-        cats.push(
-          new Sprite({
-            position: {
-              x: x * tileSize + offset.x,
-              y: y * tileSize + offset.y
-            },
-            image: img,
-            scale: 0.2
-          })
-        );
-      }
+          cats.push(
+            new Sprite({
+              position: {
+                x: x * tileSize + offset.x,
+                y: y * tileSize + offset.y
+              },
+              image: img,
+              scale: 0.2
+            })
+          );
+        }
+      });
     });
-  });
+
+    // ====== SIMPAN DATA AWAL ======
+    const originalCatsData = JSON.parse(JSON.stringify(cats));
+
+    // ====== FUNGSI RESET ======
+    function resetCats() {
+      cats.length = 0; // kosongkan array
+
+      originalCatsData.forEach(c => {
+        cats.push(JSON.parse(JSON.stringify(c)));
+      });
+    }
 
   // -------------------------------------------------------------
   // SPRITES
@@ -161,12 +185,16 @@
   window.addEventListener("keydown", (e) => {
     if (keys[e.key] !== undefined) keys[e.key].pressed = true;
 
-    if (e.key.toLowerCase() === "e" && nearCatIndex !== -1) {
+    if (e.key && e.key.toLowerCase() === "e" && nearCatIndex !== -1) {
       cats.splice(nearCatIndex, 1);
       nearCatIndex = -1;
       document.getElementById("prompt").innerText = "";
 
-      gameState.catsSaved++;
+      gameState.cats_saved++;
+      if (gameState.cats_saved % 5 === 0) {
+        gameState.level++;
+        console.log("LEVEL UP → Level sekarang:", gameState.level);
+      }
       updateStatsUI();
       saveProgressToDB();
     }

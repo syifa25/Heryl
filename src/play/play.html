@@ -179,7 +179,46 @@
                     font-weight: bold;
                     text-shadow: 2px 2px 5px black;
                 "></div>
-        
+
+                <!-- POPUP WAKTU HABIS -->
+                                
+                <div id="timeUpPopup" style="
+                    display:none;
+                    position: absolute;
+                    top: 50%; left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(0,0,0,0.85);
+                    padding: 25px 35px;
+                    border-radius: 12px;
+                    text-align: center;
+                    color: white;
+                    z-index: 99999;
+                    width: 300px;
+                    font-size: 18px;
+
+                    
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                ">
+                    <p id="levelInfo"></p>
+                    <p>Waktu Habis!</p>
+
+                    <button id="btnFinish" style="
+                        padding:10px 20px;
+                        background:#ff4444;
+                        border:none;
+                        border-radius:8px;
+                        color:white;
+                        cursor:pointer;
+                        font-size:16px;
+                        font-weight:bold;
+                        margin-top: 10px;
+                    ">
+                        Selesai
+                    </button>
+                </div>
+                
                 <!-- Game Canvas -->
                 <canvas id= "gameCanvas" class="animate-fade-in delay-500"></canvas>
 
@@ -191,8 +230,8 @@
                     <p>ESC : Pause</p>
                 </div>
                 <!-- Win Modal -->
-                <div id="winModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-                    <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm">
+                <div id="winModal" class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm w-[80%]">
                         <h2 class="text-2xl font-bold mb-4">Selamat!</h2>
                         <p class="mb-6">Semua kucing berhasil diselamatkan!</p>
                         <button id="closeWinModal" class="bg-retro-green-btn hover:bg-retro-green-btn-hover text-white px-4 py-2 rounded-lg">SELESAI</button>
@@ -201,30 +240,6 @@
 
             </div>
             
-            <script>
-                // Check login status on page load
-                window.addEventListener('load', () => {
-                    const isLoggedIn = localStorage.getItem('heryll_loggedIn');
-                    const username = localStorage.getItem('heryll_username');
-                    
-                    if (isLoggedIn === 'true' && username) {
-                        // User is logged in, show game
-                        document.getElementById('login-required').style.display = 'none';
-                        document.getElementById('loading-screen').style.display = 'flex';
-                        document.getElementById('gameCanvas').style.display = 'block';
-                        document.getElementById('controls-info').style.display = 'block';
-                        loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
-                        
-                        // Simulate game loading
-                        setTimeout(() => {
-                            document.getElementById('loading-screen').style.display = 'none';
-                        }, 2000);
-                    } else {
-                        // User not logged in
-                        document.getElementById('login-required').style.display = 'flex';
-                    }
-                });
-            </script>
         </div>
         
         <div class="game-stats mt-8 max-w-4xl mx-auto px-4">
@@ -234,14 +249,14 @@
                         <i class="fas fa-cat text-retro-green-btn text-2xl mr-2"></i>
                         <span class="text-lg font-bold">Cats Saved</span>
                     </div>
-                    <p id="catsSaved" class="text-3xl text-retro-green-btn font-bold">0</p>
+                    <p id="cats_saved" class="text-3xl text-retro-green-btn font-bold">0</p>
                 </div>
                 <div class="bg-white rounded-lg p-4 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-300">
                     <div class="flex items-center justify-center mb-2">
                         <i class="fas fa-clock text-retro-green-btn text-2xl mr-2"></i>
                         <span class="text-lg font-bold">Time Played</span>
                     </div>
-                    <p id="timePlayed" class="text-3xl text-retro-green-btn font-bold">00:00</p>
+                    <p id="time_played" class="text-3xl text-retro-green-btn font-bold">00:00</p>
                 </div>
                 <div class="bg-white rounded-lg p-4 shadow-md transition-all duration-300 hover:shadow-xl animate-slide-up delay-500">
                     <div class="flex items-center justify-center mb-2">
@@ -262,319 +277,379 @@
     <script src="../data/collisions.js"></script>
     <script src="../data/kucingData.js"></script>
     <script src="../scripts/classes.js"></script>
-    <script type="module" src="../scripts/game.js"></script>
+    <script src="../scripts/game.js"></script>
     <script src="../scripts/counter.js"></script>
     <script src="../scripts/main.js"></script>
     <!-- Tambahkan script untuk auth modal -->
     <script>
-        // In-memory user database (simulate backend)
-        let usersDatabase = JSON.parse(localStorage.getItem('heryll_users')) || [];
+    // ===============================
+    // In-memory user database (simulate backend)
+    // ===============================
+    let usersDatabase = JSON.parse(localStorage.getItem('heryll_users')) || [];
+    
+    
+    // ===============================
+    // DOM Elements
+    // ===============================
+    const authModal = document.getElementById('authModal');
+    const loginTab = document.getElementById('loginTab');
+    const closeModal = document.getElementById('closeModal');
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const switchToSignup = document.getElementById('switchToSignup');
+    const switchToLogin = document.getElementById('switchToLogin');
+    const submitLogin = document.getElementById('submitLogin');
+    const submitSignup = document.getElementById('submitSignup');
+    const loginToPlay = document.getElementById('loginToPlay');
+    
 
-        // DOM Elements
-        const authModal = document.getElementById('authModal');
-        const loginTab = document.getElementById('loginTab');
-        const closeModal = document.getElementById('closeModal');
-        const authTabs = document.querySelectorAll('.auth-tab');
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-        const switchToSignup = document.getElementById('switchToSignup');
-        const switchToLogin = document.getElementById('switchToLogin');
-        const submitLogin = document.getElementById('submitLogin');
-        const submitSignup = document.getElementById('submitSignup');
-        const loginToPlay = document.getElementById('loginToPlay');
 
-        // Helper functions
-        function showError(elementId, message) {
-            const errorElement = document.getElementById(elementId);
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-            errorElement.classList.add('animate-shake');
-            
-            setTimeout(() => {
-                errorElement.classList.remove('animate-shake');
-            }, 500);
-        }
+    
+    // ===============================
+    // Helper functions
+    // ===============================
+    function showError(elementId, message) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+        errorElement.classList.add('animate-shake');
+        setTimeout(() => {
+            errorElement.classList.remove('animate-shake');
+        }, 500);
+    }
 
-        function hideError(elementId) {
-            const errorElement = document.getElementById(elementId);
-            errorElement.style.display = 'none';
-        }
+    function hideError(elementId) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.style.display = 'none';
+    }
 
-        function showSuccess(elementId, message) {
-            const successElement = document.getElementById(elementId);
-            successElement.textContent = message;
-            successElement.style.display = 'block';
-        }
+    function showSuccess(elementId, message) {
+        const successElement = document.getElementById(elementId);
+        successElement.textContent = message;
+        successElement.style.display = 'block';
+    }
 
-        function hideSuccess(elementId) {
-            const successElement = document.getElementById(elementId);
-            successElement.style.display = 'none';
-        }
+    function hideSuccess(elementId) {
+        const successElement = document.getElementById(elementId);
+        successElement.style.display = 'none';
+    }
 
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 
-        // Open modal when login tab is clicked
-        loginTab.addEventListener('click', (e) => {
-            e.preventDefault();
-            authModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
+    // ===============================
+    // Open modal events
+    // ===============================
+    loginTab.addEventListener('click', (e) => {
+        e.preventDefault();
+        authModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    });
 
-        // Open modal when login to play button is clicked
-        loginToPlay.addEventListener('click', (e) => {
-            e.preventDefault();
-            authModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
+    loginToPlay.addEventListener('click', (e) => {
+        e.preventDefault();
+        authModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    });
 
-        // Close modal
-        closeModal.addEventListener('click', () => {
+    // ===============================
+    // Close modal events
+    // ===============================
+    closeModal.addEventListener('click', () => {
+        authModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        hideError('loginError');
+        hideError('signupError');
+        hideSuccess('signupSuccess');
+    });
+
+    authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) {
             authModal.style.display = 'none';
             document.body.style.overflow = 'auto';
-            // Reset forms
             hideError('loginError');
             hideError('signupError');
             hideSuccess('signupSuccess');
-        });
+        }
+    });
 
-        // Close modal when clicking outside
-        authModal.addEventListener('click', (e) => {
-            if (e.target === authModal) {
-                authModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                // Reset forms
-                hideError('loginError');
-                hideError('signupError');
-                hideSuccess('signupSuccess');
-            }
-        });
-
-        // Switch between login and signup tabs
-        authTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                authTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                const tabType = tab.getAttribute('data-tab');
-                if (tabType === 'login') {
-                    loginForm.style.display = 'block';
-                    signupForm.style.display = 'none';
-                    hideError('loginError');
-                    hideError('signupError');
-                    hideSuccess('signupSuccess');
-                } else {
-                    loginForm.style.display = 'none';
-                    signupForm.style.display = 'block';
-                    hideError('loginError');
-                    hideError('signupError');
-                    hideSuccess('signupSuccess');
-                }
-            });
-        });
-
-        // Switch to signup from login form link
-        switchToSignup.addEventListener('click', () => {
+    // ===============================
+    // Switch login/signup tabs
+    // ===============================
+    authTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
             authTabs.forEach(t => t.classList.remove('active'));
-            document.querySelector('[data-tab="signup"]').classList.add('active');
-            loginForm.style.display = 'none';
-            signupForm.style.display = 'block';
+            tab.classList.add('active');
+
+            const tabType = tab.getAttribute('data-tab');
+            if (tabType === 'login') {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            } else {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+            }
             hideError('loginError');
             hideError('signupError');
             hideSuccess('signupSuccess');
         });
+    });
 
-        // Switch to login from signup form link
-        switchToLogin.addEventListener('click', () => {
-            authTabs.forEach(t => t.classList.remove('active'));
-            document.querySelector('[data-tab="login"]').classList.add('active');
-            signupForm.style.display = 'none';
-            loginForm.style.display = 'block';
+    switchToSignup.addEventListener('click', () => {
+        authTabs.forEach(t => t.classList.remove('active'));
+        document.querySelector('[data-tab="signup"]').classList.add('active');
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'block';
+        hideError('loginError');
+        hideError('signupError');
+        hideSuccess('signupSuccess');
+    });
+
+    switchToLogin.addEventListener('click', () => {
+        authTabs.forEach(t => t.classList.remove('active'));
+        document.querySelector('[data-tab="login"]').classList.add('active');
+        signupForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        hideError('loginError');
+        hideError('signupError');
+        hideSuccess('signupSuccess');
+    });
+
+    // ===============================
+    // Login
+    // ===============================
+    submitLogin.addEventListener('click', () => {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value.trim();
+
+        if (!email || !password) {
+            showError('loginError', 'Please fill in all fields!');
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            showError('loginError', 'Please enter a valid email address!');
+            return;
+        }
+
+        const user = usersDatabase.find(u => u.email === email && u.password === password);
+        if (!user) {
+            showError('loginError', 'Account not found. Please sign up first!');
+            return;
+        }
+
+        localStorage.setItem('heryll_loggedIn', 'true');
+        localStorage.setItem('heryll_username', user.username);
+        localStorage.setItem('heryll_email', user.email);
+        localStorage.setItem('heryll_token', token);
+
+
+        loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${user.username.toUpperCase()}`;
+        hideError('loginError');
+
+        setTimeout(() => {
+            alert(`Login successful! Welcome ${user.username}`);
+            authModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+
+            // Show game
+            document.getElementById('login-required').style.display = 'none';
+            document.getElementById('loading-screen').style.display = 'flex';
+            document.getElementById('gameCanvas').style.display = 'block';
+            document.getElementById('controls-info').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+                gameState.paused = false;
+                startTimer();
+            }, 2000);
+        }, 500);
+    });
+
+    // ===============================
+    // Signup
+    // ===============================
+    submitSignup.addEventListener('click', () => {
+        const username = document.getElementById('signupUsername').value.trim();
+        const email = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value.trim();
+        const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+        if (!username || !email || !password || !confirmPassword) {
+            showError('signupError', 'Please fill in all fields!');
+            return;
+        }
+
+        if (username.length < 3) {
+            showError('signupError', 'Username must be at least 3 characters!');
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            showError('signupError', 'Please enter a valid email address with @ symbol!');
+            return;
+        }
+
+        if (password.length < 6) {
+            showError('signupError', 'Password must be at least 6 characters!');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showError('signupError', 'Passwords do not match!');
+            return;
+        }
+
+        if (usersDatabase.find(u => u.email === email)) {
+            showError('signupError', 'Email already registered! Please login instead.');
+            return;
+        }
+
+        if (usersDatabase.find(u => u.username === username)) {
+            showError('signupError', 'Username already taken!');
+            return;
+        }
+
+        const newUser = {
+            id: Date.now().toString(),
+            username,
+            email,
+            password,
+            createdAt: new Date().toISOString(),
+            cats_saved: 0,
+            time_played: 0,
+            level: 1
+        };
+
+        usersDatabase.push(newUser);
+        localStorage.setItem('heryll_users', JSON.stringify(usersDatabase));
+
+        localStorage.setItem('heryll_loggedIn', 'true');
+        localStorage.setItem('heryll_username', username);
+        localStorage.setItem('heryll_email', email);
+
+        showSuccess('signupSuccess', 'Account created successfully! Logging you in...');
+        hideError('signupError');
+
+        setTimeout(() => {
+            loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
+            authModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+
+            // Show game
+            document.getElementById('login-required').style.display = 'none';
+            document.getElementById('loading-screen').style.display = 'flex';
+            document.getElementById('gameCanvas').style.display = 'block';
+            document.getElementById('controls-info').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+                gameState.paused = false;
+                startTimer();
+            }, 2000);
+        }, 1500);
+    });
+
+    // ===============================
+    // Close modal with Escape key
+    // ===============================
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && authModal.style.display === 'block') {
+            authModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
             hideError('loginError');
             hideError('signupError');
             hideSuccess('signupSuccess');
-        });
+        }
+    });
 
-        // Login form submission
-        submitLogin.addEventListener('click', () => {
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
-            
-            // Validation
-            if (!email || !password) {
-                showError('loginError', 'Please fill in all fields!');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showError('loginError', 'Please enter a valid email address!');
-                return;
-            }
-            
-            // Check if user exists
-            const user = usersDatabase.find(u => u.email === email && u.password === password);
-            
-            if (!user) {
-                showError('loginError', 'Account not found. Please sign up first!');
-                return;
-            }
-            
-            // Login successful
-            localStorage.setItem('heryll_loggedIn', 'true');
-            localStorage.setItem('heryll_username', user.username);
-            localStorage.setItem('heryll_email', user.email);
-            
-            // Update UI
-            loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${user.username.toUpperCase()}`;
-            hideError('loginError');
-            
-            // Show success message and close modal
+    // ===============================
+    // Check login on page load
+    // ===============================
+    window.addEventListener('load', () => {
+        const isLoggedIn = localStorage.getItem('heryll_loggedIn');
+        const username = localStorage.getItem('heryll_username');
+
+        if (isLoggedIn === 'true' && username) {
+            loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
+            loginTab.classList.add('profile-tab');
+
+            // Show game automatically
+            document.getElementById('login-required').style.display = 'none';
+            document.getElementById('loading-screen').style.display = 'flex';
+            document.getElementById('gameCanvas').style.display = 'block';
+            document.getElementById('controls-info').style.display = 'block';
             setTimeout(() => {
-                alert(`Login successful! Welcome ${user.username}`);
-                authModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                document.getElementById('loading-screen').style.display = 'none';
+           
+                gameState.paused = false;
                 
-                // Show game
-                document.getElementById('login-required').style.display = 'none';
-                document.getElementById('loading-screen').style.display = 'flex';
-                document.getElementById('gameCanvas').style.display = 'block';
-                document.getElementById('controls-info').style.display = 'block';
-                
-                // Simulate game loading
-                setTimeout(() => {
-                    document.getElementById('loading-screen').style.display = 'none';
-                }, 2000);
-            }, 500);
-        });
+            }, 2000);
+        }
+        else {
+        // Belum login → overlay tetap tampil
+        document.getElementById('login-required').style.display = 'flex';
+        document.getElementById('gameCanvas').style.display = 'none';
+        document.getElementById('controls-info').style.display = 'none';
+        }
 
-        // Signup form submission
-        submitSignup.addEventListener('click', () => {
-            const username = document.getElementById('signupUsername').value.trim();
-            const email = document.getElementById('signupEmail').value.trim();
-            const password = document.getElementById('signupPassword').value.trim();
-            const confirmPassword = document.getElementById('confirmPassword').value.trim();
-            
-            // Validation
-            if (!username || !email || !password || !confirmPassword) {
-                showError('signupError', 'Please fill in all fields!');
-                return;
-            }
-            
-            if (username.length < 3) {
-                showError('signupError', 'Username must be at least 3 characters!');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showError('signupError', 'Please enter a valid email address with @ symbol!');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showError('signupError', 'Password must be at least 6 characters!');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                showError('signupError', 'Passwords do not match!');
-                return;
-            }
-            
-            // Check if email already exists
-            const existingUser = usersDatabase.find(u => u.email === email);
-            if (existingUser) {
-                showError('signupError', 'Email already registered! Please login instead.');
-                return;
-            }
-            
-            // Check if username already exists
-            const existingUsername = usersDatabase.find(u => u.username === username);
-            if (existingUsername) {
-                showError('signupError', 'Username already taken!');
-                return;
-            }
-            
-            // Create new user
-            const newUser = {
-                id: Date.now().toString(),
-                username: username,
-                email: email,
-                password: password,
-                createdAt: new Date().toISOString(),
-                catsSaved: 0,
-                timePlayed: 0,
-                level: 1
-            };
-            
-            // Add to database
-            usersDatabase.push(newUser);
-            localStorage.setItem('heryll_users', JSON.stringify(usersDatabase));
-            
-            // Auto login after signup
-            localStorage.setItem('heryll_loggedIn', 'true');
-            localStorage.setItem('heryll_username', username);
-            localStorage.setItem('heryll_email', email);
-            
-            // Show success message
-            showSuccess('signupSuccess', 'Account created successfully! Logging you in...');
-            hideError('signupError');
-            
-            // Update UI and close modal
-            setTimeout(() => {
-                loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
-                authModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                
-                // Show game
-                document.getElementById('login-required').style.display = 'none';
-                document.getElementById('loading-screen').style.display = 'flex';
-                document.getElementById('gameCanvas').style.display = 'block';
-                document.getElementById('controls-info').style.display = 'block';
-                
-                // Simulate game loading
-                setTimeout(() => {
-                    document.getElementById('loading-screen').style.display = 'none';
-                }, 2000);
-            }, 1500);
-        });
+        // Load users from localStorage
+        const storedUsers = localStorage.getItem('heryll_users');
+        if (storedUsers) usersDatabase = JSON.parse(storedUsers);
+    });
 
-        // Close modal with Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && authModal.style.display === 'block') {
-                authModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                hideError('loginError');
-                hideError('signupError');
-                hideSuccess('signupSuccess');
-            }
-        });
+</script>
 
-        // Initialize on page load
-        window.addEventListener('load', () => {
-            const isLoggedIn = localStorage.getItem('heryll_loggedIn');
-            const username = localStorage.getItem('heryll_username');
-            
-            if (isLoggedIn === 'true' && username) {
-                loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
-                loginTab.classList.add('profile-tab');
-            }
-            
-            // Load users from localStorage
-            const storedUsers = localStorage.getItem('heryll_users');
-            if (storedUsers) {
-                usersDatabase = JSON.parse(storedUsers);
-            }
-        });
-    </script>
     <script>
     // GAME STATE OBJECT 
     let gameState = {
-        catsSaved: 0,
-        timePlayed: 0,   // in seconds
-        level: 1
+        cats_saved: 0,
+        time_played: 0,   // in seconds
+        level: 1,
+        paused:false
     };
+    const MAX_TIME = 180;
+
+    function startTimer() {
+        // Reset waktu
+        gameState.time_played = 0;
+
+        // Hapus timer lama jika ada
+        if (window.mainTimer) clearInterval(window.mainTimer);
+
+        // Mulai timer baru
+        window.mainTimer = setInterval(() => {
+            if (!gameState.paused) {
+
+                gameState.time_played++;
+
+                if (gameState.time_played >= MAX_TIME) {
+                    triggerTimeUp();
+                    clearInterval(window.mainTimer);
+                    return;
+                }
+
+                updateStatsUI();
+            }
+        }, 1000);
+    }
+
+
+    function triggerTimeUp() {
+        gameState.paused = true;
+
+        // tampilkan level terakhir
+        document.getElementById("levelInfo").innerText =
+            `Kamu berada di Level ${gameState.level}`;
+
+        // tampilkan popup
+        document.getElementById("timeUpPopup").style.display = "flex";
+    }
+
+
 
     // FETCH PROGRESS (LOAD) 
     async function loadProgressFromDB() {
@@ -582,7 +657,7 @@
         if (!email) return;
 
         try {
-            const res = await fetch("http://localhost:5000/get-progress", {
+            const res = await fetch("http://localhost:5000/progress/get-progress", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email })
@@ -590,8 +665,8 @@
 
             const data = await res.json();
             if (data.success && data.data) {
-                gameState.catsSaved = data.data.cats_saved || 0;
-                gameState.timePlayed = data.data.time_played || 0;
+                gameState.cats_saved = data.data.cats_saved || 0;
+                
                 gameState.level = data.data.level || 1;
 
                 updateStatsUI();
@@ -605,16 +680,20 @@
     // SAVE PROGRESS TO DB 
     async function saveProgressToDB() {
         const email = localStorage.getItem("heryll_email");
-        if (!email) return;
+        const token = localStorage.getItem("heryll_token");
+        if (!email ||!token) return;
 
         try {
-            await fetch("http://localhost:5000/save-progress", {
+            await fetch("http://localhost:5000/game/save", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
                 body: JSON.stringify({
                     email: email,
-                    catsSaved: gameState.catsSaved,
-                    timePlayed: gameState.timePlayed,
+                    cats_saved: gameState.cats_saved,
+                    time_played: gameState.time_played,
                     level: gameState.level
                 })
             });
@@ -625,8 +704,8 @@
 
     // UPDATE UI STATS 
     function updateStatsUI() {
-        document.getElementById("catsSaved").textContent = gameState.catsSaved;
-        document.getElementById("timePlayed").textContent = formatTime(gameState.timePlayed);
+        document.getElementById("cats_saved").textContent = gameState.cats_saved;
+        document.getElementById("time_played").textContent = formatTime(gameState.time_played);
         document.getElementById("currentLevel").textContent = gameState.level;
     }
 
@@ -644,6 +723,7 @@
 
         if (isLoggedIn === "true") {
             await loadProgressFromDB();
+            startTimer();
         }
     });
 
@@ -663,21 +743,16 @@
 
     // Call this when player saves a cat
     function addCatSaved() {
-        gameState.catsSaved++;
+        gameState.cats_saved++;
         updateStatsUI();
         saveProgressToDB();
     }
 
-    // Call every 1 second for timer
-    setInterval(() => {
-        if (localStorage.getItem("heryll_loggedIn") === "true") {
-            gameState.timePlayed++;
-            updateStatsUI();
-        }
-    }, 1000);
+   
 
     // Call when player reaches next level
     function levelUp() {
+        console.log("LEVEL UP DIPANGGIL!!!!");
         gameState.level++;
         updateStatsUI();
         saveProgressToDB();
@@ -730,6 +805,9 @@
 
                 setTimeout(() => {
                     document.getElementById("loading-screen").style.display = "none";
+                    gameState.time_played = 0;
+                    gameState.paused = false;
+                    startTimer();
                 }, 2000);
 
             } catch (err) {
@@ -762,6 +840,11 @@
                 });
 
                 const data = await res.json();
+                if (res.status === 409) {
+                    showError("registerError", "Email sudah terdaftar!");
+                    return;
+                }
+
 
                 if (!res.ok) {
                     showError("signupError", data.message || "Signup failed!");
@@ -777,7 +860,7 @@
         });
 
         // SAVE GAME PROGRESS TO BACKEND
-        async function saveProgress(level, catsSaved, timePlayed) {
+        async function saveProgress(level, cats_saved, time_played) {
             const token = localStorage.getItem("heryll_token");
             if (!token) return;
 
@@ -788,9 +871,10 @@
                     "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({ 
+                    email: localStorage.getItem("heryll_email"),
                     level, 
-                    catsSaved, 
-                    timePlayed 
+                    cats_saved, 
+                    time_played 
                 })
             });
         }
@@ -799,22 +883,38 @@
         // Dipanggil saat page load jika login
         async function loadProgress() {
             const token = localStorage.getItem("heryll_token");
-            if (!token) return;
+            const email = localStorage.getItem("heryll_email");
+            if (!token || !email) return;
 
-            const res = await fetch(`${API_BASE}/game/progress`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
+            try {
+                const res = await fetch(`${API_BASE}/progress/get-progress`, {
+                    method: "POST", // wajib POST
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                if (!res.ok) {
+                    console.error("Failed to load progress:", res.status, res.statusText);
+                    return;
                 }
-            });
 
-            const data = await res.json();
-            if (res.ok) {
+                const data = await res.json();
+
                 // tampilkan progress di UI
-                document.getElementById("catsSaved").textContent = data.catsSaved;
-                document.getElementById("currentLevel").textContent = data.level;
-                document.getElementById("timePlayed").textContent = data.timePlayed;
+                if (data.success && data.data) {
+                    document.getElementById("cats_saved").textContent = data.data.cats_saved || 0;
+                    document.getElementById("currentLevel").textContent = data.data.level || 1;
+                    document.getElementById("time_played").textContent = data.data.time_played || 0;
+                }
+
+            } catch (err) {
+                console.error("Error fetching progress:", err);
             }
         }
+
 
         // Auto load jika login 
         window.addEventListener("load", loadProgress);
@@ -823,8 +923,29 @@
         // Contoh: saveProgress(currentLevel, catsSaved, time)
         window.saveProgress = saveProgress;
 
-        </script>
+        document.getElementById("btnFinish").addEventListener("click", () => {
+            startTime = Date.now();
+            // Reset game state
+            gameState.level = 1;
+            gameState.cats_saved = 0;
+            gameState.time_played = 0;
+            gameState.paused = false;
+
+            // Munculkan ulang semua kucing
+            //resetCats();
+
+            // Update UI
+            updateStatsUI();
+
+            // Sembunyikan popup
+            document.getElementById("timeUpPopup").style.display = "none";
+
+            // Simpan ulang progress
+            saveProgressToDB();
+        });
 
 
+    </script>
+    
 </body>
 </html>
