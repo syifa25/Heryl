@@ -18,6 +18,8 @@ exports.getProgress = async (req, res) => {
 };
 
 exports.updateProgress = async (req, res) => {
+    console.log("DATA MASUK:", req.body);
+
     const { cats_saved, time_played, level } = req.body;
 
     const update = await db.query(

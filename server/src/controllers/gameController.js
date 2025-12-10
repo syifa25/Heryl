@@ -9,14 +9,14 @@ exports.getData = async (req, res) => {
 };
 
 exports.saveData = async (req, res) => {
-    const { progress, level, coins } = req.body;
+    const { level, cats_saved, time_played } = req.body;
 
     await pool.query(
-        `INSERT INTO game_data(user_id, progress, level, coins)
+        `INSERT INTO game_data(user_id, level, cats_saved, time_played)
          VALUES($1,$2,$3,$4)
          ON CONFLICT (user_id)
-         DO UPDATE SET progress=$2, level=$3, coins=$4, updated_at=NOW()`,
-        [req.user.id, progress, level, coins]
+         DO UPDATE SET level=$2, cats_saved=$3, time_played=$4, updated_at=NOW()`,
+        [req.user.id, level, cats_saved, time_played]
     );
 
     res.json({ message: "Game data saved" });

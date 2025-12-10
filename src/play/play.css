@@ -415,6 +415,7 @@ nav ul li a:not(.active):hover {
 
 #loading-screen {
     background: rgba(255, 255, 255, 0.95);
+    display: none;
 }
 
 #controls-info {
@@ -545,6 +546,18 @@ nav ul li a:not(.active):hover {
 .btn-play:hover {
   background-color: #6fa155;
   transform: scale(1.05);
+}
+
+#playButton {
+    position: relative !important;
+    z-index: 30;
+    padding: 12px 28px;
+    background: #4caf50;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
 }
 
 .hero {
