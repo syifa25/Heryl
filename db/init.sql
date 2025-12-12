@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS game_data (
   level INTEGER DEFAULT 1,
   score INTEGER DEFAULT 0,
   cats_saved INTEGER DEFAULT 0,
-  time_played INTEGER DEFAULT 0, -- seconds
+  time_played INTEGER DEFAULT 0, 
   state JSONB DEFAULT '{}'::jsonb,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

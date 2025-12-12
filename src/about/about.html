@@ -103,7 +103,6 @@
         </nav>
     </header>
 
-    <!-- Auth Modal -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal" id="closeModal">&times;</button>
@@ -113,7 +112,7 @@
                 <button class="auth-tab" data-tab="signup">SIGN UP</button> <!-- Diubah dari SIGN IN ke SIGN UP -->
             </div>
             
-            <!-- Login Form -->
+            <!-- Login ya ini-->
             <div id="loginForm" class="auth-form">
                 <h2 class="text-center text-lg mb-6">WELCOME BACK!</h2>
                 <div class="form-group">
@@ -129,11 +128,11 @@
                 </div>
                 <button class="auth-btn" id="submitLogin">LOGIN</button>
                 <div class="switch-auth">
-                    Don't have an account? <span id="switchToSignup">Sign Up</span> <!-- Diubah -->
+                    Don't have an account? <span id="switchToSignup">Sign Up</span> 
                 </div>
             </div>
             
-            <!-- Sign Up Form -->
+            <!-- Kalau ini signup-->
             <div id="signupForm" class="auth-form" style="display: none;">
                 <h2 class="text-center text-lg mb-6">CREATE ACCOUNT</h2>
                 <div class="form-group">
@@ -208,17 +207,14 @@
     </footer>
 
     <script>
-        // Simpan data akun di localStorage
         const ACCOUNTS_KEY = 'heryll_accounts';
         const LOGGED_IN_KEY = 'heryll_loggedIn';
         const USERNAME_KEY = 'heryll_username';
-        
-        // Initialize accounts if not exists
+
         if (!localStorage.getItem(ACCOUNTS_KEY)) {
             localStorage.setItem(ACCOUNTS_KEY, JSON.stringify([]));
         }
-        
-        // Auth Modal Functionality
+
         const authModal = document.getElementById('authModal');
         const loginTab = document.getElementById('loginTab');
         const closeModal = document.getElementById('closeModal');
@@ -230,7 +226,7 @@
         const submitLogin = document.getElementById('submitLogin');
         const submitSignup = document.getElementById('submitSignup');
 
-        // Helper functions
+
         function showError(elementId, message) {
             const errorElement = document.getElementById(elementId);
             errorElement.textContent = message;
@@ -274,20 +270,17 @@
             return accounts.some(acc => acc.email === email || acc.username === username);
         }
 
-        // Open modal when login tab is clicked
         loginTab.addEventListener('click', (e) => {
             e.preventDefault();
             authModal.style.display = 'block';
             document.body.style.overflow = 'hidden';
         });
 
-        // Close modal
         closeModal.addEventListener('click', () => {
             authModal.style.display = 'none';
             document.body.style.overflow = 'auto';
         });
 
-        // Close modal when clicking outside
         authModal.addEventListener('click', (e) => {
             if (e.target === authModal) {
                 authModal.style.display = 'none';
@@ -295,7 +288,7 @@
             }
         });
 
-        // Switch between login and signup tabs
+        // pindah pindah
         authTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 authTabs.forEach(t => t.classList.remove('active'));
@@ -312,7 +305,6 @@
                 } else {
                     loginForm.style.display = 'none';
                     signupForm.style.display = 'block';
-                    // Reset errors
                     hideError('usernameError');
                     hideError('emailError');
                     hideError('passwordError');
@@ -321,7 +313,6 @@
             });
         });
 
-        // Switch to signup from login form link
         switchToSignup.addEventListener('click', () => {
             authTabs.forEach(t => t.classList.remove('active'));
             document.querySelector('[data-tab="signup"]').classList.add('active');
@@ -329,7 +320,6 @@
             signupForm.style.display = 'block';
         });
 
-        // Switch to login from signup form link
         switchToLogin.addEventListener('click', () => {
             authTabs.forEach(t => t.classList.remove('active'));
             document.querySelector('[data-tab="login"]').classList.add('active');
@@ -337,19 +327,16 @@
             loginForm.style.display = 'block';
         });
 
-        // Login form submission
         submitLogin.addEventListener('click', () => {
             const emailOrUsername = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
-            
-            // Reset errors
+
             hideError('loginEmailError');
             hideError('loginPasswordError');
             hideError('loginAccountError');
             
             let hasError = false;
             
-            // Validation
             if (!emailOrUsername) {
                 showError('loginEmailError', 'Please enter email or username');
                 hasError = true;
@@ -361,8 +348,7 @@
             }
             
             if (hasError) return;
-            
-            // Check if account exists
+
             const account = findAccount(emailOrUsername, password);
             
             if (!account) {
@@ -370,7 +356,6 @@
                 return;
             }
             
-            // Login successful
             localStorage.setItem(LOGGED_IN_KEY, 'true');
             localStorage.setItem(USERNAME_KEY, account.username);
             
@@ -381,14 +366,12 @@
             loginTab.classList.add('profile-tab');
         });
 
-        // Signup form submission
         submitSignup.addEventListener('click', () => {
             const username = document.getElementById('signupUsername').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            // Reset errors
+
             hideError('usernameError');
             hideError('emailError');
             hideError('passwordError');
@@ -396,7 +379,6 @@
             
             let hasError = false;
             
-            // Validation
             if (username.length < 3) {
                 showError('usernameError', 'Username must be at least 3 characters');
                 hasError = true;
@@ -419,13 +401,11 @@
             
             if (hasError) return;
             
-            // Check if account already exists
             if (accountExists(email, username)) {
                 showError('emailError', 'Account with this email or username already exists');
                 return;
             }
-            
-            // Save new account
+
             const accounts = JSON.parse(localStorage.getItem(ACCOUNTS_KEY) || '[]');
             accounts.push({
                 username,
@@ -435,16 +415,14 @@
             });
             localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
             
-            // Show success message
             showSuccess('signupSuccess', 'Account created successfully! You can now login.');
             
-            // Clear form
             document.getElementById('signupUsername').value = '';
             document.getElementById('signupEmail').value = '';
             document.getElementById('signupPassword').value = '';
             document.getElementById('confirmPassword').value = '';
             
-            // Auto switch to login after 2 seconds
+            // Auto pindah ke login
             setTimeout(() => {
                 authTabs.forEach(t => t.classList.remove('active'));
                 document.querySelector('[data-tab="login"]').classList.add('active');
@@ -453,7 +431,6 @@
             }, 2000);
         });
 
-        // Close modal with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && authModal.style.display === 'block') {
                 authModal.style.display = 'none';
@@ -461,7 +438,6 @@
             }
         });
 
-        // Check if user is logged in from localStorage
         window.addEventListener('load', () => {
             const isLoggedIn = localStorage.getItem(LOGGED_IN_KEY);
             const username = localStorage.getItem(USERNAME_KEY);
