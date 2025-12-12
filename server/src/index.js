@@ -9,16 +9,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: "*",
+  origin: "https://syifa25.github.io/Heryl/",
   credentials: true
 }));
 app.use(express.json());
 
-// Auth endpoints
 app.use('/auth', authRoutes);
 app.use('/api/auth', authRoutes);
 
-// Game endpoints
 app.use('/game', gameRoutes);
 app.use('/api/game', gameRoutes);
 

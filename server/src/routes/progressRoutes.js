@@ -2,7 +2,7 @@ const router = require("express").Router();
 const pool = require('../config/db');
 
 
-// SAVE GAME PROGRESS
+// untuk save game
 router.post("/game/save", async (req, res) => {
   try {
     const { email, cats_saved, time_played, level } = req.body;
@@ -43,8 +43,6 @@ router.post("/game/save", async (req, res) => {
 });
 
 
-
-// LOAD GAME PROGRESS
 router.post("/get-progress", async (req, res) => {
   try {
     const { email } = req.body;

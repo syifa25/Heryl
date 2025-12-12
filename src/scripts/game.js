@@ -1,16 +1,11 @@
 (() => {
 
-  // -------------------------------------------------------------
-  // CANVAS
-  // -------------------------------------------------------------
   const canvas = document.getElementById("gameCanvas");
   const c = canvas.getContext("2d");
 
   canvas.width = 1024;
   canvas.height = 576;
-  // --------------------------------------------
-  // EVENT TOMBOL SELESAI POP-UP
-  // --------------------------------------------
+
   closeWinModal.addEventListener("click", () => {
       winModal.classList.add("hidden");   // pop up hilang
       resetCats();                        // reset semua kucing
@@ -19,9 +14,6 @@
       currentLevel = 1;                   // balik ke level 1
   });
 
-  // -------------------------------------------------------------
-  // KELAS SPRITE & BOUNDARY
-  // -------------------------------------------------------------
   class Sprite {
     constructor({ position, image, scale = 1 }) {
       this.position = position;
@@ -60,15 +52,12 @@
     }
 
     draw() {
-      // invisible wall
       c.fillStyle = "rgba(0,0,0,0)";
       c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
   }
 
-  // -------------------------------------------------------------
-  // COLLISION MAP
-  // -------------------------------------------------------------
+  // collison atau batas batas supaya dia gak lewat 
   const collisionsMap = [];
   for (let i = 0; i < collisions.length; i += 70) {
     collisionsMap.push(collisions.slice(i, i + 70));
@@ -92,9 +81,7 @@
     });
   });
 
-  // -------------------------------------------------------------
-  // GAMBAR
-  // -------------------------------------------------------------
+  //gambar
   const backgroundImage = new Image();
   backgroundImage.src = "../img/untitled.png";
 
@@ -104,9 +91,7 @@
   const playerImage = new Image();
   playerImage.src = "../img/yn_depan.png";
 
-  // -------------------------------------------------------------
-  // KUCING
-  // -------------------------------------------------------------
+    //koceng
     const kucingMap = [];
     for (let i = 0; i < kucingData.length; i += 70) {
       kucingMap.push(kucingData.slice(i, i + 70));
@@ -115,10 +100,9 @@
     const tileSize = 48;
     const cats = [];
 
-    // ====== SPAWN KUCING ======
     kucingMap.forEach((row, y) => {
       row.forEach((value, x) => {
-        // tile 184–193 = 10 jenis kucing
+        
         if (value >= 184 && value <= 193) {
           const img = new Image();
           img.src = `../img/cat${value - 183}.png`;
@@ -137,21 +121,18 @@
       });
     });
 
-    // ====== SIMPAN DATA AWAL ======
     const originalCatsData = JSON.parse(JSON.stringify(cats));
 
-    // ====== FUNGSI RESET ======
+    // reset koceng
     function resetCats() {
-      cats.length = 0; // kosongkan array
+      cats.length = 0; 
 
       originalCatsData.forEach(c => {
         cats.push(JSON.parse(JSON.stringify(c)));
       });
     }
 
-  // -------------------------------------------------------------
-  // SPRITES
-  // -------------------------------------------------------------
+  
   const background = new Sprite({
     position: { x: offset.x, y: offset.y },
     image: backgroundImage
@@ -168,9 +149,7 @@
     image: foregroundImage
   });
 
-  // -------------------------------------------------------------
-  // MOVEMENT
-  // -------------------------------------------------------------
+  //gerak
   let nearCatIndex = -1;
 
   const keys = {
@@ -204,9 +183,6 @@
     if (keys[e.key] !== undefined) keys[e.key].pressed = false;
   });
 
-  // -------------------------------------------------------------
-  // COLLISION
-  // -------------------------------------------------------------
   function rectangularCollision({ rectangle1, rectangle2 }) {
     return (
       rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
@@ -225,9 +201,7 @@
     );
   }
 
-  // -------------------------------------------------------------
-  // ANIMATE
-  // -------------------------------------------------------------
+  //segala macam animasi
   let gameWon = false;
 
   function animate() {

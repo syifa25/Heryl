@@ -90,7 +90,6 @@
         </nav>
     </header>
 
-    <!-- Auth Modal -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal" id="closeModal">&times;</button>
@@ -100,7 +99,7 @@
                 <button class="auth-tab" data-tab="signup">SIGN UP</button>
             </div>
             
-            <!-- Login Form -->
+            <!-- Ini login -->
             <div id="loginForm" class="auth-form">
                 <h2 class="text-center text-lg mb-6">WELCOME BACK!</h2>
                 <div id="loginError" class="error-message" style="display: none;"></div>
@@ -118,7 +117,7 @@
                 </div>
             </div>
             
-            <!-- Sign Up Form -->
+            <!-- Ini signup -->
             <div id="signupForm" class="auth-form" style="display: none;">
                 <h2 class="text-center text-lg mb-6">CREATE ACCOUNT</h2>
                 <div id="signupError" class="error-message" style="display: none;"></div>
@@ -180,7 +179,7 @@
                     text-shadow: 2px 2px 5px black;
                 "></div>
 
-                <!-- POPUP WAKTU HABIS -->
+                <!-- Muncul waktu habis -->
                                 
                 <div id="timeUpPopup" style="
                     display:none;
@@ -219,17 +218,15 @@
                     </button>
                 </div>
                 
-                <!-- Game Canvas -->
+                <!-- Tempat Game -->
                 <canvas id= "gameCanvas" class="animate-fade-in delay-500"></canvas>
 
          
                 
                 <div id="controls-info" class="absolute bottom-4 left-4 bg-black bg-opacity-70 text-white p-3 rounded-lg text-xs animate-slide-up delay-700" style="display: none;">
                     <p class="mb-1">W A D S : Move</p>
-                    <p class="mb-1">SPACE : Jump</p>
-                    <p>ESC : Pause</p>
                 </div>
-                <!-- Win Modal -->
+                <!-- Muncul pas menang -->
                 <div id="winModal" class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
                     <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm w-[80%]">
                         <h2 class="text-2xl font-bold mb-4">Selamat!</h2>
@@ -280,17 +277,10 @@
     <script src="../scripts/game.js"></script>
     <script src="../scripts/counter.js"></script>
     <script src="../scripts/main.js"></script>
-    <!-- Tambahkan script untuk auth modal -->
     <script>
-    // ===============================
-    // In-memory user database (simulate backend)
-    // ===============================
+
     let usersDatabase = JSON.parse(localStorage.getItem('heryll_users')) || [];
     
-    
-    // ===============================
-    // DOM Elements
-    // ===============================
     const authModal = document.getElementById('authModal');
     const loginTab = document.getElementById('loginTab');
     const closeModal = document.getElementById('closeModal');
@@ -304,11 +294,6 @@
     const loginToPlay = document.getElementById('loginToPlay');
     
 
-
-    
-    // ===============================
-    // Helper functions
-    // ===============================
     function showError(elementId, message) {
         const errorElement = document.getElementById(elementId);
         errorElement.textContent = message;
@@ -340,9 +325,6 @@
         return emailRegex.test(email);
     }
 
-    // ===============================
-    // Open modal events
-    // ===============================
     loginTab.addEventListener('click', (e) => {
         e.preventDefault();
         authModal.style.display = 'block';
@@ -355,9 +337,6 @@
         document.body.style.overflow = 'hidden';
     });
 
-    // ===============================
-    // Close modal events
-    // ===============================
     closeModal.addEventListener('click', () => {
         authModal.style.display = 'none';
         document.body.style.overflow = 'auto';
@@ -376,9 +355,7 @@
         }
     });
 
-    // ===============================
-    // Switch login/signup tabs
-    // ===============================
+    //ini untuk switch 
     authTabs.forEach(tab => {
         tab.addEventListener('click', () => {
             authTabs.forEach(t => t.classList.remove('active'));
@@ -418,9 +395,7 @@
         hideSuccess('signupSuccess');
     });
 
-    // ===============================
-    // Login
-    // ===============================
+    // login ya we
     submitLogin.addEventListener('click', () => {
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value.trim();
@@ -455,7 +430,7 @@
             authModal.style.display = 'none';
             document.body.style.overflow = 'auto';
 
-            // Show game
+            // nampilin game
             document.getElementById('login-required').style.display = 'none';
             document.getElementById('loading-screen').style.display = 'flex';
             document.getElementById('gameCanvas').style.display = 'block';
@@ -469,9 +444,7 @@
         }, 500);
     });
 
-    // ===============================
-    // Signup
-    // ===============================
+    // iki sign up
     submitSignup.addEventListener('click', () => {
         const username = document.getElementById('signupUsername').value.trim();
         const email = document.getElementById('signupEmail').value.trim();
@@ -539,7 +512,7 @@
             authModal.style.display = 'none';
             document.body.style.overflow = 'auto';
 
-            // Show game
+            //Nampilin game
             document.getElementById('login-required').style.display = 'none';
             document.getElementById('loading-screen').style.display = 'flex';
             document.getElementById('gameCanvas').style.display = 'block';
@@ -553,9 +526,6 @@
         }, 1500);
     });
 
-    // ===============================
-    // Close modal with Escape key
-    // ===============================
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && authModal.style.display === 'block') {
             authModal.style.display = 'none';
@@ -566,9 +536,7 @@
         }
     });
 
-    // ===============================
-    // Check login on page load
-    // ===============================
+    // cek login
     window.addEventListener('load', () => {
         const isLoggedIn = localStorage.getItem('heryll_loggedIn');
         const username = localStorage.getItem('heryll_username');
@@ -577,7 +545,7 @@
             loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
             loginTab.classList.add('profile-tab');
 
-            // Show game automatically
+            // langsung tampilin game
             document.getElementById('login-required').style.display = 'none';
             document.getElementById('loading-screen').style.display = 'flex';
             document.getElementById('gameCanvas').style.display = 'block';
@@ -590,13 +558,12 @@
             }, 2000);
         }
         else {
-        // Belum login → overlay tetap tampil
+        // kalau belum login ada overlay
         document.getElementById('login-required').style.display = 'flex';
         document.getElementById('gameCanvas').style.display = 'none';
         document.getElementById('controls-info').style.display = 'none';
         }
 
-        // Load users from localStorage
         const storedUsers = localStorage.getItem('heryll_users');
         if (storedUsers) usersDatabase = JSON.parse(storedUsers);
     });
@@ -604,23 +571,17 @@
 </script>
 
     <script>
-    // GAME STATE OBJECT 
     let gameState = {
         cats_saved: 0,
-        time_played: 0,   // in seconds
+        time_played: 0,   
         level: 1,
         paused:false
     };
     const MAX_TIME = 180;
 
     function startTimer() {
-        // Reset waktu
         gameState.time_played = 0;
-
-        // Hapus timer lama jika ada
         if (window.mainTimer) clearInterval(window.mainTimer);
-
-        // Mulai timer baru
         window.mainTimer = setInterval(() => {
             if (!gameState.paused) {
 
@@ -641,23 +602,19 @@
     function triggerTimeUp() {
         gameState.paused = true;
 
-        // tampilkan level terakhir
         document.getElementById("levelInfo").innerText =
             `Kamu berada di Level ${gameState.level}`;
 
-        // tampilkan popup
         document.getElementById("timeUpPopup").style.display = "flex";
     }
 
 
-
-    // FETCH PROGRESS (LOAD) 
     async function loadProgressFromDB() {
         const email = localStorage.getItem("heryll_email");
         if (!email) return;
 
         try {
-            const res = await fetch("http://localhost:5000/progress/get-progress", {
+            const res = await fetch("https://heryl-production.up.railway.app", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email })
@@ -677,14 +634,13 @@
         }
     }
 
-    // SAVE PROGRESS TO DB 
     async function saveProgressToDB() {
         const email = localStorage.getItem("heryll_email");
         const token = localStorage.getItem("heryll_token");
         if (!email ||!token) return;
 
         try {
-            await fetch("http://localhost:5000/game/save", {
+            await fetch("https://heryl-production.up.railway.app", {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
@@ -702,22 +658,18 @@
         }
     }
 
-    // UPDATE UI STATS 
     function updateStatsUI() {
         document.getElementById("cats_saved").textContent = gameState.cats_saved;
         document.getElementById("time_played").textContent = formatTime(gameState.time_played);
         document.getElementById("currentLevel").textContent = gameState.level;
     }
 
-    // Format waktu
     function formatTime(sec) {
         const m = Math.floor(sec / 60).toString().padStart(2, "0");
         const s = (sec % 60).toString().padStart(2, "0");
         return `${m}:${s}`;
     }
 
-    
-    // AUTO LOAD PROGRESS WHEN USER LOGIN SUKSES 
     window.addEventListener("load", async () => {
         const isLoggedIn = localStorage.getItem("heryll_loggedIn");
 
@@ -727,30 +679,19 @@
         }
     });
 
-    // =======================================================
-    // === AUTO SAVE EVERY 5 SECONDS =========================
-    // =======================================================
     setInterval(() => {
         if (localStorage.getItem("heryll_loggedIn") === "true") {
             saveProgressToDB();
         }
     }, 5000);
 
-
-    // =======================================================
-    // === GAME HOOKS (prepare untuk gamenya nanti) ==========
-    // =======================================================
-
-    // Call this when player saves a cat
     function addCatSaved() {
         gameState.cats_saved++;
         updateStatsUI();
         saveProgressToDB();
     }
 
-   
 
-    // Call when player reaches next level
     function levelUp() {
         console.log("LEVEL UP DIPANGGIL!!!!");
         gameState.level++;
@@ -761,7 +702,7 @@
     <script>
         const API_BASE = "http://localhost:5000"; 
 
-        // HELPER: Simpan token + user ke localStorage
+     
         function saveAuth(token, username, email) {
             localStorage.setItem("heryll_token", token);
             localStorage.setItem("heryll_loggedIn", "true");
@@ -769,7 +710,7 @@
             localStorage.setItem("heryll_email", email);
         }
 
-        // LOGIN (backend)
+
         submitLogin.addEventListener("click", async () => {
             const email = loginEmail.value.trim();
             const password = loginPassword.value.trim();
@@ -793,10 +734,8 @@
                     return;
                 }
 
-                // simpan token JWT & user 
                 saveAuth(data.token, data.user.username, data.user.email);
 
-                // update UI
                 loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${data.user.username.toUpperCase()}`;
                 authModal.style.display = "none";
 
@@ -815,7 +754,6 @@
             }
         });
 
-        // SIGNUP (backend)
         submitSignup.addEventListener("click", async () => {
             const username = signupUsername.value.trim();
             const email = signupEmail.value.trim();
@@ -859,7 +797,7 @@
             }
         });
 
-        // SAVE GAME PROGRESS TO BACKEND
+        // Simpan progress ke database
         async function saveProgress(level, cats_saved, time_played) {
             const token = localStorage.getItem("heryll_token");
             if (!token) return;
@@ -879,8 +817,7 @@
             });
         }
 
-        // LOAD GAME PROGRESS
-        // Dipanggil saat page load jika login
+        // Dipanggil saat page load kalau dah login
         async function loadProgress() {
             const token = localStorage.getItem("heryll_token");
             const email = localStorage.getItem("heryll_email");
@@ -888,7 +825,7 @@
 
             try {
                 const res = await fetch(`${API_BASE}/progress/get-progress`, {
-                    method: "POST", // wajib POST
+                    method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${token}`
@@ -903,7 +840,7 @@
 
                 const data = await res.json();
 
-                // tampilkan progress di UI
+                // nampilin progress
                 if (data.success && data.data) {
                     document.getElementById("cats_saved").textContent = data.data.cats_saved || 0;
                     document.getElementById("currentLevel").textContent = data.data.level || 1;
@@ -916,31 +853,26 @@
         }
 
 
-        // Auto load jika login 
+        
         window.addEventListener("load", loadProgress);
 
-        // EXPORT ke game.js (supaya game.js bisa memanggil)
-        // Contoh: saveProgress(currentLevel, catsSaved, time)
+      
         window.saveProgress = saveProgress;
 
         document.getElementById("btnFinish").addEventListener("click", () => {
             startTime = Date.now();
-            // Reset game state
             gameState.level = 1;
             gameState.cats_saved = 0;
             gameState.time_played = 0;
             gameState.paused = false;
 
-            // Munculkan ulang semua kucing
-            //resetCats();
-
-            // Update UI
+            
             updateStatsUI();
 
-            // Sembunyikan popup
+        
             document.getElementById("timeUpPopup").style.display = "none";
 
-            // Simpan ulang progress
+            
             saveProgressToDB();
         });
 

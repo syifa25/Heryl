@@ -74,7 +74,7 @@
         </nav>
     </header>
 
-    <!-- Auth Modal -->
+
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal" id="closeModal">&times;</button>
@@ -84,7 +84,7 @@
                 <button class="auth-tab" data-tab="signup">SIGN UP</button>
             </div>
             
-            <!-- Login Form -->
+            <!-- iki login -->
             <div id="loginForm" class="auth-form">
                 <h2 class="text-center text-lg mb-6">WELCOME BACK!</h2>
                 <div id="loginError" class="error-message" style="display: none;"></div>
@@ -102,7 +102,7 @@
                 </div>
             </div>
             
-            <!-- Sign Up Form -->
+            <!-- ini sign up -->
             <div id="signupForm" class="auth-form" style="display: none;">
                 <h2 class="text-center text-lg mb-6">CREATE ACCOUNT</h2>
                 <div id="signupError" class="error-message" style="display: none;"></div>
@@ -177,7 +177,6 @@
             </div>
         </div>
         
-        <!-- Control Instructions -->
         <div class="controls-info mt-16 max-w-4xl mx-auto px-4 animate-fade-in delay-300">
             <h3 class="text-sm mb-6 text-center">CONTROLS</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -240,10 +239,9 @@
     </footer>
 
     <script>
-        // In-memory user database (shared with other pages)
         let usersDatabase = JSON.parse(localStorage.getItem('heryll_users')) || [];
 
-        // DOM Elements
+ 
         const authModal = document.getElementById('authModal');
         const loginTab = document.getElementById('loginTab');
         const closeModal = document.getElementById('closeModal');
@@ -256,7 +254,6 @@
         const submitSignup = document.getElementById('submitSignup');
         const startGameBtn = document.getElementById('startGameBtn');
 
-        // Helper functions
         function showError(elementId, message) {
             const errorElement = document.getElementById(elementId);
             errorElement.textContent = message;
@@ -289,36 +286,34 @@
             return emailRegex.test(email);
         }
 
-        // Open modal when login tab is clicked
+
         loginTab.addEventListener('click', (e) => {
             e.preventDefault();
             authModal.style.display = 'block';
             document.body.style.overflow = 'hidden';
         });
 
-        // Close modal
+    
         closeModal.addEventListener('click', () => {
             authModal.style.display = 'none';
             document.body.style.overflow = 'auto';
-            // Reset forms
+          
             hideError('loginError');
             hideError('signupError');
             hideSuccess('signupSuccess');
         });
 
-        // Close modal when clicking outside
+
         authModal.addEventListener('click', (e) => {
             if (e.target === authModal) {
                 authModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
-                // Reset forms
                 hideError('loginError');
                 hideError('signupError');
                 hideSuccess('signupSuccess');
             }
         });
 
-        // Switch between login and signup tabs
         authTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 authTabs.forEach(t => t.classList.remove('active'));
@@ -341,7 +336,7 @@
             });
         });
 
-        // Switch to signup from login form link
+        
         switchToSignup.addEventListener('click', () => {
             authTabs.forEach(t => t.classList.remove('active'));
             document.querySelector('[data-tab="signup"]').classList.add('active');
@@ -352,7 +347,7 @@
             hideSuccess('signupSuccess');
         });
 
-        // Switch to login from signup form link
+        
         switchToLogin.addEventListener('click', () => {
             authTabs.forEach(t => t.classList.remove('active'));
             document.querySelector('[data-tab="login"]').classList.add('active');
@@ -363,12 +358,11 @@
             hideSuccess('signupSuccess');
         });
 
-        // Login form submission
+        // Login 
         submitLogin.addEventListener('click', () => {
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value.trim();
-            
-            // Validation
+
             if (!email || !password) {
                 showError('loginError', 'Please fill in all fields!');
                 return;
@@ -379,24 +373,23 @@
                 return;
             }
             
-            // Check if user exists
+            // Cek kalau user udah ada
             const user = usersDatabase.find(u => u.email === email && u.password === password);
             
             if (!user) {
                 showError('loginError', 'Account not found. Please sign up first!');
                 return;
             }
-            
-            // Login successful
+
             localStorage.setItem('heryll_loggedIn', 'true');
             localStorage.setItem('heryll_username', user.username);
             localStorage.setItem('heryll_email', user.email);
             
-            // Update UI
+         
             loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${user.username.toUpperCase()}`;
             hideError('loginError');
             
-            // Show success message and close modal
+            
             setTimeout(() => {
                 alert(`Login successful! Welcome ${user.username}`);
                 authModal.style.display = 'none';
@@ -404,14 +397,14 @@
             }, 500);
         });
 
-        // Signup form submission
+        // signup
         submitSignup.addEventListener('click', () => {
             const username = document.getElementById('signupUsername').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPassword').value.trim();
             const confirmPassword = document.getElementById('confirmPassword').value.trim();
             
-            // Validation
+            
             if (!username || !email || !password || !confirmPassword) {
                 showError('signupError', 'Please fill in all fields!');
                 return;
@@ -437,21 +430,21 @@
                 return;
             }
             
-            // Check if email already exists
+            // Cek kalau email udah ada
             const existingUser = usersDatabase.find(u => u.email === email);
             if (existingUser) {
                 showError('signupError', 'Email already registered! Please login instead.');
                 return;
             }
             
-            // Check if username already exists
+            // Cek kalau username udah ada
             const existingUsername = usersDatabase.find(u => u.username === username);
             if (existingUsername) {
                 showError('signupError', 'Username already taken!');
                 return;
             }
             
-            // Create new user
+            // Buat user
             const newUser = {
                 id: Date.now().toString(),
                 username: username,
@@ -463,20 +456,20 @@
                 level: 1
             };
             
-            // Add to database
+           
             usersDatabase.push(newUser);
             localStorage.setItem('heryll_users', JSON.stringify(usersDatabase));
             
-            // Auto login after signup
+          
             localStorage.setItem('heryll_loggedIn', 'true');
             localStorage.setItem('heryll_username', username);
             localStorage.setItem('heryll_email', email);
             
-            // Show success message
+       
             showSuccess('signupSuccess', 'Account created successfully! Logging you in...');
             hideError('signupError');
             
-            // Update UI and close modal
+         
             setTimeout(() => {
                 loginTab.innerHTML = `<i class="fas fa-user mr-2"></i>${username.toUpperCase()}`;
                 authModal.style.display = 'none';
@@ -484,7 +477,7 @@
             }, 1500);
         });
 
-        // Close modal with Escape key
+        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && authModal.style.display === 'block') {
                 authModal.style.display = 'none';
@@ -495,7 +488,7 @@
             }
         });
 
-        // Check if user is logged in from localStorage
+
         window.addEventListener('load', () => {
             const isLoggedIn = localStorage.getItem('heryll_loggedIn');
             const username = localStorage.getItem('heryll_username');
@@ -505,13 +498,13 @@
                 loginTab.classList.add('profile-tab');
             }
             
-            // Load users from localStorage
+          
             const storedUsers = localStorage.getItem('heryll_users');
             if (storedUsers) {
                 usersDatabase = JSON.parse(storedUsers);
             }
             
-            // Check if user is logged in when clicking Play button
+       
             startGameBtn.addEventListener('click', (e) => {
                 if (!isLoggedIn || isLoggedIn !== 'true') {
                     e.preventDefault();

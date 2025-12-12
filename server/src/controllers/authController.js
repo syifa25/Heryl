@@ -57,7 +57,7 @@ exports.login = async (req, res) => {
     res.json({ message: "Login success",
       user: {
         id: user.id,
-        username: user.name,  // ini agar cocok dengan frontend kamu
+        username: user.name,  
         email: user.email
       }, 
       token 
